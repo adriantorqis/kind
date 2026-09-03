@@ -52,7 +52,7 @@ export default function AddMemory() {
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="flex h-[224px] items-center justify-center overflow-hidden"
+          className="flex h-[224px] shrink-0 items-center justify-center overflow-hidden"
           style={
             photo
               ? undefined

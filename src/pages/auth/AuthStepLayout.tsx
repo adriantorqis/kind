@@ -27,7 +27,11 @@ export function AuthStepLayout({
   return (
     <PhoneShell gradient="from-white to-[#dbeafe]">
       <div className="flex flex-col gap-6 px-6 pt-5">
-        <button onClick={() => navigate(-1)} aria-label="Back" className="text-black">
+        <button
+          onClick={() => navigate(-1)}
+          aria-label="Back"
+          className="flex size-11 shrink-0 -ml-2.5 items-center justify-center self-start text-black active:bg-black/5 rounded-full"
+        >
           <ChevronLeft size={24} />
         </button>
         <div className="flex gap-2">

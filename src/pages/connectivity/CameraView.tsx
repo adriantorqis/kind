@@ -58,10 +58,14 @@ export default function CameraView() {
       </div>
 
       <div className="relative z-10 flex items-center justify-center gap-1 px-6 pb-2 pt-1">
-        <button onClick={() => navigate(-1)} className="absolute left-4">
+        <button
+          onClick={() => navigate(-1)}
+          aria-label="Back"
+          className="absolute left-1 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full active:bg-white/10"
+        >
           <ChevronLeft size={24} />
         </button>
-        <button onClick={() => setPickerOpen((v) => !v)} className="flex items-center gap-1">
+        <button onClick={() => setPickerOpen((v) => !v)} className="flex min-h-11 items-center gap-1 px-2">
           <span className="text-[20px] font-semibold">Home Camera</span>
           <ChevronDown size={16} className={`transition ${pickerOpen ? "rotate-180" : ""}`} />
         </button>

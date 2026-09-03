@@ -29,7 +29,11 @@ export default function MemoryBook() {
       <ScreenHeader
         title="Life Memory Book"
         right={
-          <button onClick={() => navigate("/memory-book/new")} className="text-[#1d4ed8]">
+          <button
+            onClick={() => navigate("/memory-book/new")}
+            aria-label="Add Memory"
+            className="-mr-1.5 flex size-11 items-center justify-center rounded-full text-[#1d4ed8] active:bg-black/5"
+          >
             <Plus size={22} />
           </button>
         }

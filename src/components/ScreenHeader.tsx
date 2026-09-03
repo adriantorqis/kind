@@ -20,7 +20,7 @@ export function ScreenHeader({
       <button
         aria-label="Back"
         onClick={() => (onBack ? onBack() : navigate(-1))}
-        className={`absolute left-3 flex h-8 w-8 items-center justify-center rounded-full active:bg-black/5 ${light ? "text-white" : "text-black"}`}
+        className={`absolute left-1 top-1/2 -translate-y-1/2 flex size-11 items-center justify-center rounded-full active:bg-black/5 ${light ? "text-white" : "text-black"}`}
       >
         <ChevronLeft size={24} />
       </button>

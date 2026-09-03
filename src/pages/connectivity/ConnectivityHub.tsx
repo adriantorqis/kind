@@ -19,12 +19,12 @@ export default function ConnectivityHub() {
   return (
     <PhoneShell noScroll>
       <ScreenHeader title="Connectivity" transparent />
-      <div className="flex justify-center gap-8 border-b border-[#f0f0f0] bg-white px-6 pb-3">
+      <div className="flex shrink-0 justify-center gap-8 border-b border-[#f0f0f0] bg-white px-6">
         {(["Home", "Camera", "Monitor"] as Tab[]).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`text-[14px] font-semibold ${tab === t ? "text-[#1d4ed8] underline underline-offset-4" : "text-[#9e9e9e]"}`}
+            className={`min-h-11 px-1 py-3 text-[14px] font-semibold ${tab === t ? "text-[#1d4ed8] underline underline-offset-4" : "text-[#9e9e9e]"}`}
           >
             {t}
           </button>
@@ -91,7 +91,7 @@ export default function ConnectivityHub() {
 
             <button
               onClick={() => navigate(`/connectivity/camera/${encodeURIComponent(cameras[0] ?? "Bedroom")}`)}
-              className="relative mt-3 h-[176px] overflow-hidden rounded-[14px]"
+              className="relative mt-3 h-[176px] shrink-0 overflow-hidden rounded-[14px]"
             >
               <img src={cctvHero} alt="" className="absolute inset-0 size-full object-cover" />
               <div className="absolute inset-0 bg-black/25" />

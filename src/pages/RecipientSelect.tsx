@@ -48,7 +48,7 @@ export default function RecipientSelect() {
               <button
                 aria-label={`Edit ${r.name}`}
                 onClick={() => navigate(`/recipients/${r.id}/edit`)}
-                className="absolute right-4 top-4 text-[#c4c4c4] active:text-[#1d4ed8]"
+                className="absolute right-1 top-1 flex size-11 items-center justify-center rounded-full text-[#c4c4c4] active:bg-black/5 active:text-[#1d4ed8]"
               >
                 <Pencil size={16} />
               </button>

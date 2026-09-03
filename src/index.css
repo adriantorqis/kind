@@ -23,7 +23,7 @@ body {
 
 /* App shell: centers the phone frame on desktop, fills viewport on mobile */
 .app-shell {
-  min-height: 100dvh;
+  height: 100dvh;
   width: 100%;
   display: flex;
   align-items: center;
@@ -34,7 +34,11 @@ body {
 .phone-frame {
   width: 100%;
   max-width: 402px;
-  min-height: 100dvh;
+  /* Definite height (not min-height) so descendants using h-full/flex-1
+     — the home indicator, bottom nav, etc. — can resolve against it and
+     stay pinned to the bottom of the screen instead of collapsing to
+     content size. */
+  height: 100dvh;
   background: #fff;
   position: relative;
   overflow-x: hidden;
@@ -44,7 +48,6 @@ body {
 
 @media (min-width: 480px) {
   .phone-frame {
-    min-height: 874px;
     height: 874px;
     margin: 24px 0;
     border-radius: 44px;

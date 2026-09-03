@@ -22,7 +22,7 @@ export default function AddCamera() {
         <div className="flex flex-1 flex-col gap-3 px-6 py-4">
           <button
             onClick={() => setStep(2)}
-            className="relative flex h-[176px] flex-col items-center justify-end gap-1 overflow-hidden rounded-[14px] bg-black/70 p-4 text-white"
+            className="relative flex h-[176px] shrink-0 flex-col items-center justify-end gap-1 overflow-hidden rounded-[14px] bg-black/70 p-4 text-white"
           >
             <CameraIcon size={28} />
             <p className="text-[12px] font-bold">Home Camera</p>
@@ -30,7 +30,7 @@ export default function AddCamera() {
           </button>
           <button
             onClick={() => setStep(2)}
-            className="relative flex h-[176px] flex-col items-center justify-end gap-1 overflow-hidden rounded-[14px] bg-black/50 p-4 text-white"
+            className="relative flex h-[176px] shrink-0 flex-col items-center justify-end gap-1 overflow-hidden rounded-[14px] bg-black/50 p-4 text-white"
           >
             <Wifi size={28} />
             <p className="text-[12px] font-bold">Wearable Device</p>
@@ -52,8 +52,12 @@ export default function AddCamera() {
         <div className="flex h-[52px] items-center px-4">
           <p className="text-[17px] font-semibold">13:13</p>
         </div>
-        <div className="flex items-center justify-center px-6 pb-2 pt-1">
-          <button onClick={() => setStep(1)} className="absolute left-4">
+        <div className="relative flex items-center justify-center px-6 pb-2 pt-1">
+          <button
+            onClick={() => setStep(1)}
+            aria-label="Back"
+            className="absolute left-1 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full active:bg-white/10"
+          >
             <ChevronLeft size={24} />
           </button>
           <span className="text-[20px] font-semibold">Add Camera</span>

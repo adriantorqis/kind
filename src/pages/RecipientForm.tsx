@@ -42,10 +42,10 @@ export default function RecipientForm() {
   }
 
   return (
-    <PhoneShell>
+    <PhoneShell noScroll>
       <ScreenHeader title={isEdit ? "Edit Recipient" : "Add New Recipient"} />
       <form
-        className="flex flex-1 flex-col gap-5 px-6 py-5"
+        className="flex flex-1 flex-col gap-5 overflow-y-auto no-scrollbar px-6 py-5"
         onSubmit={(e) => {
           e.preventDefault();
           submit();
