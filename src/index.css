@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  background: #0b0f1a;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* App shell: centers the phone frame on desktop, fills viewport on mobile */
+.app-shell {
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0b0f1a 60%);
+}
+
+.phone-frame {
+  width: 100%;
+  max-width: 402px;
+  min-height: 100dvh;
+  background: #fff;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 480px) {
+  .phone-frame {
+    min-height: 874px;
+    height: 874px;
+    margin: 24px 0;
+    border-radius: 44px;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6), 0 0 0 10px #111827, 0 0 0 11px #374151;
+    overflow: hidden;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
