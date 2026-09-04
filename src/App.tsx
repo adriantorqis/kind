@@ -16,6 +16,18 @@ import AddCamera from "./pages/connectivity/AddCamera";
 import AiSummary from "./pages/AiSummary";
 import MemoryBook from "./pages/memory/MemoryBook";
 import AddMemory from "./pages/memory/AddMemory";
+import MomentsHub from "./pages/moments/MomentsHub";
+import MemoryGame from "./pages/moments/MemoryGame";
+import SensoryPlayer from "./pages/moments/SensoryPlayer";
+import MoodLog from "./pages/moments/MoodLog";
+import LearnHub from "./pages/learn/LearnHub";
+import ArticleDetail from "./pages/learn/ArticleDetail";
+import Assistant from "./pages/learn/Assistant";
+import CircleHub from "./pages/circle/CircleHub";
+import AddFamilyMember from "./pages/circle/AddFamilyMember";
+import LogSymptom from "./pages/circle/LogSymptom";
+import ConsultHub from "./pages/consult/ConsultHub";
+import BookConsultation from "./pages/consult/BookConsultation";
 
 export default function App() {
   return (
@@ -38,12 +50,32 @@ export default function App() {
             <Route path="/activity" element={<Activity />} />
             <Route path="/ai-summary" element={<AiSummary />} />
 
+            {/* K — Kindred Moments */}
+            <Route path="/moments" element={<MomentsHub />} />
+            <Route path="/moments/game" element={<MemoryGame />} />
+            <Route path="/moments/sensory" element={<SensoryPlayer />} />
+            <Route path="/moments/log" element={<MoodLog />} />
+            <Route path="/memory-book" element={<MemoryBook />} />
+            <Route path="/memory-book/new" element={<AddMemory />} />
+
+            {/* I — Informed Caregiving */}
+            <Route path="/learn" element={<LearnHub />} />
+            <Route path="/learn/assistant" element={<Assistant />} />
+            <Route path="/learn/:id" element={<ArticleDetail />} />
+
+            {/* N — Network */}
+            <Route path="/circle" element={<CircleHub />} />
+            <Route path="/circle/add" element={<AddFamilyMember />} />
+            <Route path="/circle/log-symptom" element={<LogSymptom />} />
+
+            {/* D — Direct-to-Professional */}
+            <Route path="/consult" element={<ConsultHub />} />
+            <Route path="/consult/new" element={<BookConsultation />} />
+
+            {/* Connectivity — optional integration, not a primary pillar */}
             <Route path="/connectivity" element={<ConnectivityHub />} />
             <Route path="/connectivity/camera/:room" element={<CameraView />} />
             <Route path="/connectivity/add-camera" element={<AddCamera />} />
-
-            <Route path="/memory-book" element={<MemoryBook />} />
-            <Route path="/memory-book/new" element={<AddMemory />} />
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

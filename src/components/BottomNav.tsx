@@ -1,10 +1,11 @@
-import { Home, ClipboardList, Wifi } from "lucide-react";
+import { Home, BookHeart, GraduationCap, Users } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const tabs = [
   { to: "/home", label: "Home", icon: Home },
-  { to: "/activity", label: "Activity", icon: ClipboardList },
-  { to: "/connectivity", label: "Connect", icon: Wifi },
+  { to: "/moments", label: "Moments", icon: BookHeart },
+  { to: "/learn", label: "Learn", icon: GraduationCap },
+  { to: "/circle", label: "Circle", icon: Users },
 ];
 
 export function BottomNav() {
@@ -15,11 +16,11 @@ export function BottomNav() {
           key={to}
           to={to}
           className={({ isActive }) =>
-            `flex flex-col items-center gap-1 px-4 ${isActive ? "text-[#1d4ed8]" : "text-[#9e9e9e]"}`
+            `flex flex-col items-center gap-1 px-3 ${isActive ? "text-[#1d4ed8]" : "text-[#9e9e9e]"}`
           }
         >
-          <Icon size={24} />
-          <span className="text-[11px] font-medium">{label}</span>
+          <Icon size={23} />
+          <span className="text-[10.5px] font-medium">{label}</span>
         </NavLink>
       ))}
     </div>

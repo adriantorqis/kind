@@ -2,7 +2,6 @@ import { useState } from "react";
 import { CheckCircle2, Circle, Pill } from "lucide-react";
 import { PhoneShell, HomeIndicator } from "../components/PhoneShell";
 import { ScreenHeader } from "../components/ScreenHeader";
-import { BottomNav } from "../components/BottomNav";
 import { useStore, type MedSlot } from "../state/store";
 
 const DAYS = [
@@ -90,7 +89,6 @@ export default function Activity() {
           })}
         </div>
       </div>
-      <BottomNav />
       <HomeIndicator />
     </PhoneShell>
   );

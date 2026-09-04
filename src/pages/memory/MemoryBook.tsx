@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, MessageCircle, UserRound } from "lucide-react";
+import { Plus, MessageCircle, UserRound, Smile } from "lucide-react";
 import { PhoneShell, HomeIndicator } from "../../components/PhoneShell";
 import { ScreenHeader } from "../../components/ScreenHeader";
 import { useStore } from "../../state/store";
@@ -28,6 +28,7 @@ export default function MemoryBook() {
     <PhoneShell noScroll gradient="from-[#f0f4ff] to-[#e8f0fe]">
       <ScreenHeader
         title="Life Memory Book"
+        onBack={() => navigate("/moments")}
         right={
           <button
             onClick={() => navigate("/memory-book/new")}
@@ -104,6 +105,13 @@ export default function MemoryBook() {
                 </div>
               ))}
             </div>
+
+            <button
+              onClick={() => navigate("/moments/log", { state: { kind: "book", title: "Life Memory Book" } })}
+              className="mt-6 flex items-center justify-center gap-2 rounded-[14px] border-2 border-dashed border-[#1d4ed8]/40 py-4 text-[14px] font-semibold text-[#1d4ed8]"
+            >
+              <Smile size={18} /> Log today's session
+            </button>
           </>
         ) : (
           <div className="flex flex-col gap-3">

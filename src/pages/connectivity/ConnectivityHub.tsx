@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Sparkles, Plus, ChevronRight, HeartPulse, Moon, Camera as CameraIcon, Watch } from "lucide-react";
 import { PhoneShell, HomeIndicator } from "../../components/PhoneShell";
 import { ScreenHeader } from "../../components/ScreenHeader";
-import { BottomNav } from "../../components/BottomNav";
 import { useStore } from "../../state/store";
 import cctvHero from "../../assets/images/cctv-bedroom-hero.png";
 import deviceCamera from "../../assets/images/device-home-camera.png";
@@ -18,7 +17,7 @@ export default function ConnectivityHub() {
 
   return (
     <PhoneShell noScroll>
-      <ScreenHeader title="Connectivity" transparent />
+      <ScreenHeader title="Connectivity" transparent onBack={() => navigate("/home")} />
       <div className="flex shrink-0 justify-center gap-8 border-b border-[#f0f0f0] bg-white px-6">
         {(["Home", "Camera", "Monitor"] as Tab[]).map((t) => (
           <button
@@ -157,7 +156,6 @@ export default function ConnectivityHub() {
           </div>
         )}
       </div>
-      <BottomNav />
       <HomeIndicator />
     </PhoneShell>
   );
