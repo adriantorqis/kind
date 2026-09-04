@@ -1,11 +1,22 @@
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Signal, Wifi, BatteryFull } from "lucide-react";
+
+export function useClock() {
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 20_000);
+    return () => clearInterval(id);
+  }, []);
+  return now;
+}
 
 function StatusBar({ light = false }: { light?: boolean }) {
   const color = light ? "text-white" : "text-black";
+  const now = useClock();
+  const time = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
   return (
     <div className={`flex h-[52px] items-center justify-between px-4 shrink-0 ${color}`}>
-      <p className="text-[17px] font-semibold">13:13</p>
+      <p className="text-[17px] font-semibold tabular-nums">{time}</p>
       <div className="flex items-center gap-1.5">
         <Signal size={15} strokeWidth={2.5} />
         <Wifi size={15} strokeWidth={2.5} />

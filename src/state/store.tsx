@@ -180,13 +180,13 @@ const seedRecipients: Recipient[] = [
 ];
 
 const seedActivity: ActivityItem[] = [
-  { id: "a1", title: "Morning Medication - Panadol", time: "08:00 AM", slot: "Morning", done: true, assigneeId: "fam-you" },
-  { id: "a2", title: "Blood Pressure Check", time: "09:00 AM", slot: "Morning", done: true, assigneeId: "fam-you" },
-  { id: "a3", title: "Morning Medication - Panadol", time: "13:00 PM", slot: "Afternoon", done: false, assigneeId: "fam-budi" },
-  { id: "a4", title: "Blood Pressure Check", time: "15:00 PM", slot: "Afternoon", done: false, assigneeId: null },
-  { id: "a5", title: "Evening walk", time: "17:00 PM", slot: "Evening", done: false, assigneeId: "fam-you" },
-  { id: "a6", title: "Blood Pressure Check", time: "09:00 AM", slot: "Evening", done: false, assigneeId: null },
-  { id: "a7", title: "Aricept (Donepezil)", time: "21:00 PM", slot: "Night", done: false, assigneeId: "fam-you" },
+  { id: "a1", title: "Panadol", time: "08:00", slot: "Morning", done: true, assigneeId: "fam-you" },
+  { id: "a2", title: "Blood pressure check", time: "09:00", slot: "Morning", done: true, assigneeId: "fam-you" },
+  { id: "a3", title: "Panadol", time: "13:00", slot: "Afternoon", done: false, assigneeId: "fam-budi" },
+  { id: "a4", title: "Blood pressure check", time: "15:00", slot: "Afternoon", done: false, assigneeId: null },
+  { id: "a5", title: "Walk in the garden", time: "17:00", slot: "Evening", done: false, assigneeId: "fam-you" },
+  { id: "a6", title: "Dinner and evening wash", time: "18:30", slot: "Evening", done: false, assigneeId: "fam-budi" },
+  { id: "a7", title: "Aricept (Donepezil)", time: "21:00", slot: "Night", done: false, assigneeId: "fam-you" },
 ];
 
 function decadeOf(year: number) {
@@ -195,13 +195,13 @@ function decadeOf(year: number) {
 
 const seedMemories: Memory[] = [
   { id: "m1", year: 1944, decade: "1940s", title: "Born in Surabaya", feeling: "🌅", type: "Milestone", photo: memBorn, prompt: "Dad, tell me about Surabaya when you were a boy. What did your street look like?" },
-  { id: "m2", year: 1962, decade: "1960s", title: "Graduated from SMAN 1 Surabaya", feeling: "🌟", type: "Milestone", photo: memGraduated },
-  { id: "m3", year: 1968, decade: "1960s", title: "Wedding with Siti Rahayu", feeling: "😊", type: "Moment", photo: memWedding },
-  { id: "m4", year: 1970, decade: "1970s", title: "Budi's First Steps", feeling: "😊", type: "Milestone", photo: memFirstSteps },
-  { id: "m5", year: 1975, decade: "1970s", title: "A New Life in Jakarta", feeling: "🌅", type: "Milestone", photo: memJakarta },
-  { id: "m6", year: 1985, decade: "1980s", title: "The Family Home in Pondok Indah", feeling: "🌟", type: "Place", photo: memFamilyHome },
-  { id: "m7", year: 1998, decade: "1990s", title: "Cici — His First Grandchild", feeling: "😊", type: "Moment", photo: memGrandchild },
-  { id: "m8", year: 2010, decade: "2010s", title: "Retirement from PT Maju Bersama", feeling: "🍂", type: "Milestone", photo: memRetirement },
+  { id: "m2", year: 1962, decade: "1960s", title: "Graduated from SMAN 1 Surabaya", feeling: "🌟", type: "Milestone", photo: memGraduated, prompt: "Who did you sit next to at school? Were you a good student, or a troublemaker?" },
+  { id: "m3", year: 1968, decade: "1960s", title: "Wedding with Siti Rahayu", feeling: "😊", type: "Moment", photo: memWedding, prompt: "What do you remember about the day you married Ibu? What was she wearing?" },
+  { id: "m4", year: 1970, decade: "1970s", title: "Budi's First Steps", feeling: "😊", type: "Milestone", photo: memFirstSteps, prompt: "Do you remember Budi learning to walk? Was he a brave one or a careful one?" },
+  { id: "m5", year: 1975, decade: "1970s", title: "A New Life in Jakarta", feeling: "🌅", type: "Milestone", photo: memJakarta, prompt: "What surprised you most about Jakarta when you first arrived?" },
+  { id: "m6", year: 1985, decade: "1980s", title: "The Family Home in Pondok Indah", feeling: "🌟", type: "Place", photo: memFamilyHome, prompt: "Which room in the old house was your favourite, and why that one?" },
+  { id: "m7", year: 1998, decade: "1990s", title: "Cici — His First Grandchild", feeling: "😊", type: "Moment", photo: memGrandchild, prompt: "Do you remember the first time you held Cici? What did you think?" },
+  { id: "m8", year: 2010, decade: "2010s", title: "Retirement from PT Maju Bersama", feeling: "🍂", type: "Milestone", photo: memRetirement, prompt: "What did you miss most about work after you retired? And what didn't you miss at all?" },
 ];
 
 const seedArticles: Article[] = [
@@ -387,8 +387,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [selectedRecipientId, setSelectedRecipientId] = useState<string | null>(() =>
     load("kin.selectedRecipientId", "bagus" as string | null),
   );
-  const [activity, setActivity] = useState<ActivityItem[]>(() => load("kin.activity.v2", seedActivity));
-  const [memories, setMemories] = useState<Memory[]>(() => load("kin.memories", seedMemories));
+  const [activity, setActivity] = useState<ActivityItem[]>(() => load("kin.activity.v3", seedActivity));
+  const [memories, setMemories] = useState<Memory[]>(() => load("kin.memories.v2", seedMemories));
   const [cameras, setCameras] = useState<Room[]>(() => load("kin.cameras", ["Bedroom", "Living Room"] as Room[]));
   const [engagementLog, setEngagementLog] = useState<EngagementLog[]>(() => load("kin.engagementLog", [] as EngagementLog[]));
   const [family, setFamily] = useState<FamilyMember[]>(() => load("kin.family", seedFamily));
@@ -400,8 +400,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     () => localStorage.setItem("kin.selectedRecipientId", JSON.stringify(selectedRecipientId)),
     [selectedRecipientId],
   );
-  useEffect(() => localStorage.setItem("kin.activity.v2", JSON.stringify(activity)), [activity]);
-  useEffect(() => localStorage.setItem("kin.memories", JSON.stringify(memories)), [memories]);
+  useEffect(() => localStorage.setItem("kin.activity.v3", JSON.stringify(activity)), [activity]);
+  useEffect(() => localStorage.setItem("kin.memories.v2", JSON.stringify(memories)), [memories]);
   useEffect(() => localStorage.setItem("kin.cameras", JSON.stringify(cameras)), [cameras]);
   useEffect(() => localStorage.setItem("kin.engagementLog", JSON.stringify(engagementLog)), [engagementLog]);
   useEffect(() => localStorage.setItem("kin.family", JSON.stringify(family)), [family]);
