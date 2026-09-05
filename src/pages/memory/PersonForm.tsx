@@ -4,6 +4,7 @@ import { Trash2 } from "lucide-react";
 import { PhoneShell, HomeIndicator } from "../../components/PhoneShell";
 import { ScreenHeader } from "../../components/ScreenHeader";
 import { PhotoBoxRow, type BoxPhoto } from "../../components/PhotoBox";
+import { usePhotoPicker } from "../../components/PhotoPicker";
 import { FormField, FormTextarea, PrimaryButton } from "../../components/ui";
 import { useStore } from "../../state/store";
 
@@ -13,6 +14,7 @@ export default function PersonForm() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { people, addPerson, updatePerson, deletePerson, selectedRecipient } = useStore();
+  const { requestPhoto, sheet } = usePhotoPicker();
 
   const editing = people.find((p) => p.id === id);
   const isEdit = Boolean(editing);
@@ -61,6 +63,7 @@ export default function PersonForm() {
           <PhotoBoxRow
             photos={photos}
             coverSrc={coverSrc}
+            onRequestPhoto={requestPhoto}
             onAdd={(entry) => {
               const next = { ...entry, id: crypto.randomUUID() };
               setPhotos((prev) => [...prev, next]);
@@ -141,6 +144,7 @@ export default function PersonForm() {
           )}
         </div>
       </form>
+      {sheet}
       <HomeIndicator />
     </PhoneShell>
   );

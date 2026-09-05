@@ -1,8 +1,9 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserRound, Camera } from "lucide-react";
 import { PhoneShell, HomeIndicator } from "../components/PhoneShell";
 import { ScreenHeader } from "../components/ScreenHeader";
+import { usePhotoPicker } from "../components/PhotoPicker";
 import { Chip, FormField, FormTextarea, PrimaryButton } from "../components/ui";
 import { useStore, type DementiaStage } from "../state/store";
 
@@ -19,7 +20,7 @@ export default function RecipientForm() {
   const { recipients, addRecipient, updateRecipient } = useStore();
   const editing = recipients.find((r) => r.id === id);
   const isEdit = Boolean(editing);
-  const fileRef = useRef<HTMLInputElement>(null);
+  const { requestPhoto, sheet } = usePhotoPicker();
 
   const [name, setName] = useState(editing?.name ?? "");
   const [age, setAge] = useState(editing ? String(editing.age) : "");
@@ -51,20 +52,13 @@ export default function RecipientForm() {
           submit();
         }}
       >
-        <input
-          ref={fileRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) setPhoto(URL.createObjectURL(file));
-          }}
-        />
         <div className="flex flex-col items-center gap-2 rounded-[14px] bg-white py-6">
           <button
             type="button"
-            onClick={() => fileRef.current?.click()}
+            onClick={async () => {
+              const src = await requestPhoto();
+              if (src) setPhoto(src);
+            }}
             className="relative flex size-[64px] items-center justify-center rounded-full bg-[#dbeafe] text-[#1d4ed8]"
           >
             {photo ? (
@@ -134,6 +128,7 @@ export default function RecipientForm() {
           {isEdit ? "Save Changes" : "Save New Recipient"}
         </PrimaryButton>
       </form>
+      {sheet}
       <HomeIndicator />
     </PhoneShell>
   );

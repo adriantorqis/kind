@@ -3,12 +3,14 @@ import { BookOpen, Clock, Pencil, Users } from "lucide-react";
 import { PhoneShell, HomeIndicator } from "../../components/PhoneShell";
 import { ScreenHeader } from "../../components/ScreenHeader";
 import { PhotoBoxRow } from "../../components/PhotoBox";
+import { usePhotoPicker } from "../../components/PhotoPicker";
 import { useStore } from "../../state/store";
 
 export default function PersonDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { people, memories, family, addPersonPhoto, removePersonPhoto, setPrimaryPhoto } = useStore();
+  const { requestPhoto, sheet } = usePhotoPicker();
 
   const person = people.find((p) => p.id === id);
 
@@ -91,6 +93,7 @@ export default function PersonDetail() {
         <PhotoBoxRow
           photos={person.photos ?? []}
           coverSrc={person.photo}
+          onRequestPhoto={requestPhoto}
           onAdd={(entry) => addPersonPhoto(person.id, entry)}
           onRemove={(pid) => removePersonPhoto(person.id, pid)}
           onSetCover={(pid) => setPrimaryPhoto(person.id, pid)}
@@ -146,6 +149,7 @@ export default function PersonDetail() {
           </p>
         )}
       </div>
+      {sheet}
       <HomeIndicator />
     </PhoneShell>
   );

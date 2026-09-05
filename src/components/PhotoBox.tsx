@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Camera, Check, ChevronLeft, Star, Trash2, X } from "lucide-react";
 
 export type BoxPhoto = { id: string; year: number; photo: string };
@@ -42,17 +42,19 @@ function Polaroid({
 export function PhotoBoxRow({
   photos,
   coverSrc,
+  onRequestPhoto,
   onAdd,
   onRemove,
   onSetCover,
 }: {
   photos: BoxPhoto[];
   coverSrc?: string;
+  /** Opens the phone's photo picker; resolves to a src, or null if dismissed. */
+  onRequestPhoto: () => Promise<string | null>;
   onAdd: (entry: { year: number; photo: string }) => void;
   onRemove?: (id: string) => void;
   onSetCover?: (id: string) => void;
 }) {
-  const fileRef = useRef<HTMLInputElement>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
   const [draftPhoto, setDraftPhoto] = useState<string | undefined>();
@@ -61,11 +63,12 @@ export function PhotoBoxRow({
   const sorted = [...photos].sort((a, b) => a.year - b.year);
   const selected = sorted.find((p) => p.id === selectedId);
 
-  function beginAdd() {
-    setAdding(true);
-    setDraftPhoto(undefined);
+  async function beginAdd() {
+    const src = await onRequestPhoto();
+    if (!src) return;
+    setDraftPhoto(src);
     setDraftYear("");
-    fileRef.current?.click();
+    setAdding(true);
   }
 
   function cancelAdd() {
@@ -131,16 +134,6 @@ export function PhotoBoxRow({
   // ---- the box itself ----
   return (
     <div className="rounded-[10px] bg-[#efe4cf] p-4">
-      <input
-        ref={fileRef}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={(e) => {
-          const file = e.target.files?.[0];
-          if (file) setDraftPhoto(URL.createObjectURL(file));
-        }}
-      />
       <div className="flex items-start gap-3 overflow-x-auto no-scrollbar pb-1 pt-2">
         {sorted.map((p, i) => (
           <Polaroid
@@ -153,34 +146,26 @@ export function PhotoBoxRow({
           />
         ))}
 
-        {adding ? (
+        {adding && draftPhoto ? (
           <div className="flex shrink-0 flex-col items-center rounded-[3px] bg-white p-[7px] pb-2.5 shadow-[0_5px_14px_rgba(60,45,25,0.22)]">
-            {draftPhoto ? (
-              <>
-                <img src={draftPhoto} alt="" className="size-[78px] rounded-[1px] object-cover" />
-                <div className="mt-1.5 flex items-center gap-1">
-                  <input
-                    value={draftYear}
-                    onChange={(e) => setDraftYear(e.target.value.replace(/\D/g, "").slice(0, 4))}
-                    placeholder="Year"
-                    inputMode="numeric"
-                    className="w-[46px] rounded-[4px] border border-[#d8c9a8] bg-[#fbf6ec] py-0.5 text-center text-[11px] tabular-nums text-[#4a3c2a] outline-none focus:border-[#1d4ed8]"
-                  />
-                  <button
-                    onClick={confirmAdd}
-                    disabled={!/^\d{4}$/.test(draftYear)}
-                    aria-label="Add this photo"
-                    className="flex size-6 items-center justify-center rounded-full bg-[#1d4ed8] text-white disabled:opacity-30"
-                  >
-                    <Check size={13} />
-                  </button>
-                </div>
-              </>
-            ) : (
-              <div className="flex size-[78px] items-center justify-center">
-                <div className="size-4 animate-spin rounded-full border-2 border-[#c9b691] border-t-transparent" />
-              </div>
-            )}
+            <img src={draftPhoto} alt="" className="size-[78px] rounded-[1px] object-cover" />
+            <div className="mt-1.5 flex items-center gap-1">
+              <input
+                value={draftYear}
+                onChange={(e) => setDraftYear(e.target.value.replace(/\D/g, "").slice(0, 4))}
+                placeholder="Year"
+                inputMode="numeric"
+                className="w-[46px] rounded-[4px] border border-[#d8c9a8] bg-[#fbf6ec] py-0.5 text-center text-[11px] tabular-nums text-[#4a3c2a] outline-none focus:border-[#1d4ed8]"
+              />
+              <button
+                onClick={confirmAdd}
+                disabled={!/^\d{4}$/.test(draftYear)}
+                aria-label="Add this photo"
+                className="flex size-6 items-center justify-center rounded-full bg-[#1d4ed8] text-white disabled:opacity-30"
+              >
+                <Check size={13} />
+              </button>
+            </div>
             <button
               onClick={cancelAdd}
               aria-label="Cancel"

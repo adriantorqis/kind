@@ -1,9 +1,10 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Camera, ChevronDown, Trash2 } from "lucide-react";
+import { ChevronDown, Trash2 } from "lucide-react";
 import { PhoneShell, HomeIndicator } from "../../components/PhoneShell";
 import { ScreenHeader } from "../../components/ScreenHeader";
 import { Chip, FormTextarea, PrimaryButton } from "../../components/ui";
+import { usePhotoPicker, PhotoPlaceholder } from "../../components/PhotoPicker";
 import { useStore, type MemoryType } from "../../state/store";
 
 const TYPES: MemoryType[] = ["Milestone", "Moment", "Place", "Person"];
@@ -12,7 +13,7 @@ export default function AddMemory() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { memories, people, addMemory, updateMemory, deleteMemory, selectedRecipient } = useStore();
-  const fileRef = useRef<HTMLInputElement>(null);
+  const { requestPhoto, sheet } = usePhotoPicker();
 
   const editing = memories.find((m) => m.id === id);
   const isEdit = Boolean(editing);
@@ -69,22 +70,14 @@ export default function AddMemory() {
           submit();
         }}
       >
-        <input
-          ref={fileRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) setPhoto(URL.createObjectURL(file));
-          }}
-        />
-
         {/* one object, not two fields: the photo and its year, like a print pulled from an envelope */}
         <div className="mx-auto w-full max-w-[260px] rounded-[4px] bg-white p-3 pb-4 shadow-[0_10px_26px_rgba(20,22,26,0.14)]">
           <button
             type="button"
-            onClick={() => fileRef.current?.click()}
+            onClick={async () => {
+              const src = await requestPhoto();
+              if (src) setPhoto(src);
+            }}
             className="relative block aspect-[4/3] w-full overflow-hidden rounded-[2px] bg-[#e8ebf0]"
           >
             {photo ? (
@@ -95,10 +88,7 @@ export default function AddMemory() {
                 </span>
               </>
             ) : (
-              <div className="flex size-full flex-col items-center justify-center gap-1.5 text-[#8a8f99]">
-                <Camera size={22} />
-                <p className="text-[12px] font-medium">Add a photo</p>
-              </div>
+              <PhotoPlaceholder />
             )}
           </button>
           <input
@@ -193,6 +183,7 @@ export default function AddMemory() {
           </button>
         )}
       </form>
+      {sheet}
       <HomeIndicator />
     </PhoneShell>
   );
