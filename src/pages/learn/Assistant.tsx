@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Sparkles, Send, Stethoscope, BookOpen } from "lucide-react";
 import { PhoneShell, HomeIndicator } from "../../components/PhoneShell";
 import { ScreenHeader } from "../../components/ScreenHeader";
@@ -62,6 +62,8 @@ const SUGGESTIONS = [
 
 export default function Assistant() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const prefillQuery = (location.state as { prefillQuery?: string } | null)?.prefillQuery;
   const { articles } = useStore();
   const [messages, setMessages] = useState<Msg[]>([
     { from: "bot", text: "Ask me anything about day-to-day care — I'll answer from the caregiver library, and tell you plainly when it's beyond what I know." },
@@ -69,6 +71,7 @@ export default function Assistant() {
   const [input, setInput] = useState("");
   const [thinking, setThinking] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
+  const sentPrefill = useRef(false);
 
   function send(text: string) {
     if (!text.trim()) return;
@@ -96,6 +99,14 @@ export default function Assistant() {
       setTimeout(() => listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" }), 50);
     }, 600);
   }
+
+  useEffect(() => {
+    if (prefillQuery && !sentPrefill.current) {
+      sentPrefill.current = true;
+      send(prefillQuery);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prefillQuery]);
 
   return (
     <PhoneShell noScroll gradient="from-[#f0fdfa] to-[#e0f5f1]">
