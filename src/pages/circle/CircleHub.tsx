@@ -49,16 +49,20 @@ export default function CircleHub() {
 
         <button
           onClick={() => navigate("/ai-summary")}
-          className="flex items-center gap-3 rounded-[14px] border-2 border-[#6b4bbd]/30 bg-white p-4 text-left"
+          className="relative flex items-center gap-3 overflow-hidden rounded-[14px] p-4 text-left"
+          style={{ background: "linear-gradient(120deg, #f1edff 0%, #eaf1ff 55%, #f7dde5 100%)" }}
         >
-          <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#e5e0f6] text-[#6b4bbd]">
-            <Sparkles size={20} />
+          <Sparkles size={18} className="mt-0.5 shrink-0 self-start text-[#6b4bbd]" />
+          <div className="min-w-0 flex-1">
+            <p
+              className="text-[15px] font-semibold text-transparent bg-clip-text"
+              style={{ backgroundImage: "linear-gradient(90deg, #6b4bbd 5%, #5443e7 50%, #a3123f 95%)" }}
+            >
+              Today's Insight
+            </p>
+            <p className="text-[12px] text-[#5c5470]">Recap of tasks, mood & sessions</p>
           </div>
-          <div className="flex-1">
-            <p className="text-[14px] font-semibold text-black">Today's Insight</p>
-            <p className="text-[12px] text-[#818181]">AI recap of tasks, mood & sessions</p>
-          </div>
-          <ChevronRight size={18} className="text-[#c4c4c4]" />
+          <ChevronRight size={18} className="shrink-0 self-center text-[#6b4bbd]/60" />
         </button>
 
         <div>
@@ -68,21 +72,17 @@ export default function CircleHub() {
               <UserPlus size={14} /> Add
             </button>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex gap-3.5 overflow-x-auto no-scrollbar px-0.5 pb-1">
             {ROLE_ORDER.flatMap((role) => family.filter((f) => f.role === role)).map((m) => (
-              <div key={m.id} className="flex items-center gap-3 rounded-[14px] bg-white p-3">
+              <div key={m.id} className="flex w-[68px] shrink-0 flex-col items-center gap-1.5 text-center">
                 <div
-                  className="flex size-10 shrink-0 items-center justify-center rounded-full text-[14px] font-semibold text-white"
+                  className="flex size-14 shrink-0 items-center justify-center rounded-full text-[18px] font-semibold text-white ring-2 ring-white shadow-[0_2px_8px_rgba(20,10,40,0.15)]"
                   style={{ backgroundColor: m.color }}
                 >
                   {m.name[0]}
                 </div>
-                <div>
-                  <p className="text-[14px] font-semibold text-black">{m.name}</p>
-                  <p className="text-[11px] text-[#9e9e9e]">
-                    {m.role} · {m.relationship}
-                  </p>
-                </div>
+                <p className="w-full truncate text-[12px] font-semibold text-black">{m.name.split(" ")[0]}</p>
+                <p className="w-full truncate text-[10px] text-[#9e9e9e]">{m.role.replace(" Caregiver", "")}</p>
               </div>
             ))}
           </div>
@@ -105,7 +105,7 @@ export default function CircleHub() {
                     className="flex w-full items-center gap-3 text-left"
                   >
                     <div
-                      className={`flex size-9 shrink-0 items-center justify-center rounded-full text-[12px] font-semibold text-white ${
+                      className={`flex size-9 shrink-0 items-center justify-center rounded-[10px] text-[12px] font-semibold text-white ${
                         assignee ? "" : "bg-[#dfdfdf] text-[#9e9e9e]"
                       }`}
                       style={assignee ? { backgroundColor: assignee.color } : undefined}

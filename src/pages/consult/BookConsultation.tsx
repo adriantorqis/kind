@@ -17,11 +17,13 @@ const SLOTS = ["Fri, 12 Sep · 10:30 AM", "Fri, 12 Sep · 2:00 PM", "Mon, 15 Sep
 export default function BookConsultation() {
   const navigate = useNavigate();
   const location = useLocation();
-  const prefillReason = (location.state as { reason?: string } | null)?.reason;
+  const state = location.state as { reason?: string; type?: SpecialistType } | null;
+  const prefillReason = state?.reason;
+  const prefillType = state?.type;
   const { specialists, bookConsultation, symptomLogs, engagementLog, selectedRecipient } = useStore();
 
-  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
-  const [type, setType] = useState<SpecialistType | null>(null);
+  const [step, setStep] = useState<1 | 2 | 3 | 4>(prefillType ? 2 : 1);
+  const [type, setType] = useState<SpecialistType | null>(prefillType ?? null);
   const [specialistId, setSpecialistId] = useState<string | null>(null);
   const [slot, setSlot] = useState<string | null>(null);
   const [reason, setReason] = useState(prefillReason ?? "");
@@ -66,7 +68,10 @@ export default function BookConsultation() {
     <PhoneShell noScroll>
       <ScreenHeader
         title="Book a Consultation"
-        onBack={() => (step === 1 ? navigate("/consult") : setStep((s) => (s - 1) as typeof step))}
+        onBack={() => {
+          if (step === 1 || (step === 2 && prefillType)) navigate("/consult");
+          else setStep((s) => (s - 1) as typeof step);
+        }}
       />
       <div className="flex flex-1 flex-col gap-4 overflow-y-auto no-scrollbar px-6 py-4">
         {step === 1 && (
