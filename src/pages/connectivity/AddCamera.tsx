@@ -26,7 +26,7 @@ export default function AddCamera() {
           >
             <CameraIcon size={28} />
             <p className="text-[12px] font-bold">Home Camera</p>
-            <p className="text-[8px] text-white/50">Home CCTV</p>
+            <p className="text-[11px] text-white/50">Home CCTV</p>
           </button>
           <button
             onClick={() => setStep(2)}
@@ -34,7 +34,7 @@ export default function AddCamera() {
           >
             <Wifi size={28} />
             <p className="text-[12px] font-bold">Wearable Device</p>
-            <p className="text-[8px] text-white/50">Health Tracker</p>
+            <p className="text-[11px] text-white/50">Health Tracker</p>
           </button>
           <div className="flex flex-1 flex-col items-center justify-center gap-2 rounded-[14px] bg-[#1d4ed8] text-white">
             <Plus size={28} />
@@ -50,7 +50,7 @@ export default function AddCamera() {
     return (
       <div className="relative flex h-full flex-col bg-black text-white">
         <div className="flex h-[52px] items-center px-4">
-          <p className="text-[17px] font-semibold">13:13</p>
+          <p className="text-[16px] font-semibold">13:13</p>
         </div>
         <div className="relative flex items-center justify-center px-6 pb-2 pt-1">
           <button

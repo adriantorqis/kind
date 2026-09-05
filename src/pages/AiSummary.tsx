@@ -28,7 +28,7 @@ export default function AiSummary() {
             <div className="mb-1 flex items-center gap-2 text-[12px] font-semibold text-black">
               <ClipboardCheck size={16} /> Tasks Today
             </div>
-            <p className="text-[32px] font-bold text-black">
+            <p className="text-[24px] font-bold text-black">
               {done}
               <span className="text-[16px] text-[#818181]">/{activity.length}</span>
             </p>
@@ -40,7 +40,7 @@ export default function AiSummary() {
             <div className="mb-1 flex items-center gap-2 text-[12px] font-semibold text-black">
               <Smile size={16} /> Last Session
             </div>
-            <p className="text-[32px] font-bold leading-none text-black">{lastSession?.mood ?? "—"}</p>
+            <p className="text-[24px] font-bold leading-none text-black">{lastSession?.mood ?? "—"}</p>
             <p className="mt-2 text-[11px] text-[#818181]">
               {lastSession ? lastSession.title : "No sessions logged yet"}
             </p>
@@ -72,10 +72,10 @@ export default function AiSummary() {
 
         {activeAlerts.length > 0 && (
           <div className="mt-4 w-full rounded-[14px] border border-[#a3123f]/20 bg-[#a3123f]/5 p-4">
-            <p className="flex items-center gap-2 text-[13px] font-semibold text-[#a3123f]">
+            <p className="flex items-center gap-2 text-[14px] font-semibold text-[#a3123f]">
               <AlertTriangle size={14} /> {activeAlerts.length} unacknowledged alert{activeAlerts.length > 1 ? "s" : ""}
             </p>
-            <p className="mt-1 text-[13px] leading-[18px] text-black">
+            <p className="mt-1 text-[14px] leading-[18px] text-black">
               The Circle has {activeAlerts.length === 1 ? "an" : ""} open symptom alert that hasn't been acknowledged yet.
             </p>
             <button onClick={() => navigate("/circle")} className="mt-2 text-[12px] font-semibold text-[#a3123f]">
@@ -85,8 +85,8 @@ export default function AiSummary() {
         )}
 
         <div className="mt-4 w-full rounded-[14px] border border-[#1d4ed8]/20 bg-[#1d4ed8]/5 p-4">
-          <p className="text-[13px] font-semibold text-[#1d4ed8]">✦ AI Recommendation</p>
-          <p className="mt-1 text-[13px] leading-[18px] text-black">
+          <p className="text-[14px] font-semibold text-[#1d4ed8]">✦ AI Recommendation</p>
+          <p className="mt-1 text-[14px] leading-[18px] text-black">
             {lastSession?.mood === "😟"
               ? `The last session felt hard for ${name}. Try something familiar and low-effort — a calming sound or a favorite photo — rather than something new today.`
               : `Consider a Kindred Moments session with ${name} today — reminiscence and familiar content tend to generate positive responses.`}

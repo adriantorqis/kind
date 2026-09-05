@@ -87,7 +87,7 @@ export default function AddMemory() {
           ) : (
             <div className="flex flex-col items-center gap-1.5 text-[#5c6069]">
               <Camera size={22} />
-              <p className="text-[13px] font-medium">Add a photo</p>
+              <p className="text-[14px] font-medium">Add a photo</p>
             </div>
           )}
         </button>
@@ -125,7 +125,7 @@ export default function AddMemory() {
 
           {people.length > 0 && (
             <div>
-              <p className="mb-2 text-[13px] font-semibold text-black">Who's in it</p>
+              <p className="mb-2 text-[14px] font-semibold text-black">Who's in it</p>
               <div className="flex flex-wrap gap-2">
                 {people.map((p) => (
                   <Chip key={p.id} selected={peopleIds.includes(p.id)} onClick={() => togglePerson(p.id)}>
@@ -137,7 +137,7 @@ export default function AddMemory() {
           )}
 
           <div>
-            <p className="mb-2 text-[13px] font-semibold text-black">Type</p>
+            <p className="mb-2 text-[14px] font-semibold text-black">Type</p>
             <div className="flex flex-wrap gap-2">
               {TYPES.map((t) => (
                 <Chip key={t} selected={type === t} onClick={() => setType(t)}>

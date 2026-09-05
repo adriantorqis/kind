@@ -37,7 +37,7 @@ export default function MoodLog() {
         <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
           <CheckCircle2 size={48} className="text-[#0b6b62]" />
           <p className="text-[16px] font-semibold text-black">Logged</p>
-          <p className="text-[13px] text-[#818181]">This helps shape what's recommended next time.</p>
+          <p className="text-[14px] text-[#818181]">This helps shape what's recommended next time.</p>
         </div>
         <HomeIndicator />
       </PhoneShell>
@@ -49,7 +49,7 @@ export default function MoodLog() {
       <div className="flex flex-1 flex-col gap-6 px-6 py-8">
         <div>
           <p className="text-[12px] font-semibold uppercase tracking-wide text-[#c2410c]">{title}</p>
-          <h1 className="mt-1 text-[22px] font-semibold text-black">
+          <h1 className="mt-1 text-[24px] font-semibold text-black">
             How did that go for {selectedRecipient?.name.split(" ")[0] ?? "them"}?
           </h1>
         </div>
@@ -63,7 +63,7 @@ export default function MoodLog() {
                 mood === m.face ? "border-[#c2410c]" : "border-transparent"
               }`}
             >
-              <span className="text-[32px]">{m.face}</span>
+              <span className="text-[24px]">{m.face}</span>
               <span className="text-[12px] font-medium text-[#818181]">{m.label}</span>
             </button>
           ))}
@@ -81,7 +81,7 @@ export default function MoodLog() {
           <PrimaryButton onClick={submit} disabled={!mood}>
             Save & Finish
           </PrimaryButton>
-          <button onClick={() => navigate("/moments")} className="min-h-11 py-2 text-center text-[13px] font-medium text-[#818181]">
+          <button onClick={() => navigate("/moments")} className="min-h-11 py-2 text-center text-[14px] font-medium text-[#818181]">
             Skip for now
           </button>
         </div>

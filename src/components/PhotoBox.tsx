@@ -87,13 +87,13 @@ export function PhotoBoxRow({
       <div className="rounded-[10px] bg-[#efe4cf] p-4">
         <button
           onClick={() => setSelectedId(null)}
-          className="mb-3 flex min-h-9 items-center gap-1 text-[13px] font-semibold text-[#8a7452]"
+          className="mb-3 flex min-h-9 items-center gap-1 text-[14px] font-semibold text-[#8a7452]"
         >
           <ChevronLeft size={16} /> Back to the box
         </button>
         <div className="mx-auto w-fit rounded-[4px] bg-white p-2.5 pb-4 shadow-[0_10px_28px_rgba(60,45,25,0.28)]">
           <img src={selected.photo} alt="" className="max-h-[240px] w-full max-w-[280px] rounded-[2px] object-cover" />
-          <p className="mt-2 text-center text-[15px] font-semibold tabular-nums text-[#4a3c2a]">{selected.year}</p>
+          <p className="mt-2 text-center text-[16px] font-semibold tabular-nums text-[#4a3c2a]">{selected.year}</p>
         </div>
         <div className="mt-4 flex flex-col gap-2">
           {!isCover && onSetCover && (
@@ -108,7 +108,7 @@ export function PhotoBoxRow({
             </button>
           )}
           {isCover && (
-            <p className="flex min-h-11 items-center justify-center gap-1.5 text-[13px] font-medium text-[#8a7452]">
+            <p className="flex min-h-11 items-center justify-center gap-1.5 text-[14px] font-medium text-[#8a7452]">
               <Star size={13} fill="#8a7452" className="text-[#8a7452]" /> This is the main photo
             </p>
           )}
@@ -184,7 +184,7 @@ export function PhotoBoxRow({
             <button
               onClick={cancelAdd}
               aria-label="Cancel"
-              className="mt-1 flex min-h-6 items-center gap-0.5 text-[10px] font-medium text-[#a3123f]"
+              className="mt-1 flex min-h-6 items-center gap-0.5 text-[11px] font-medium text-[#a3123f]"
             >
               <X size={10} /> cancel
             </button>
@@ -195,7 +195,7 @@ export function PhotoBoxRow({
             className="flex size-[92px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-[3px] border-2 border-dashed border-[#c9b691] text-[#8a7452] active:bg-black/[0.03]"
           >
             <Camera size={20} />
-            <span className="text-[10.5px] font-medium leading-none">Add a photo</span>
+            <span className="text-[11px] font-medium leading-none">Add a photo</span>
           </button>
         )}
       </div>

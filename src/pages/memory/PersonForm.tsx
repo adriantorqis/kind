@@ -55,7 +55,7 @@ export default function PersonForm() {
         }}
       >
         <div>
-          <p className="mb-2 px-1 text-[13px] font-semibold text-[#4a3c2a]">
+          <p className="mb-2 px-1 text-[14px] font-semibold text-[#4a3c2a]">
             Their photo box{photos.length === 0 && " — start with one"}
           </p>
           <PhotoBoxRow
@@ -101,7 +101,7 @@ export default function PersonForm() {
                   type="button"
                   key={s}
                   onClick={() => setRelationship(s)}
-                  className={`rounded-full border px-3 py-2 text-[13px] font-medium ${
+                  className={`rounded-full border px-3 py-2 text-[14px] font-medium ${
                     relationship === s
                       ? "border-[#1d4ed8] bg-[#1d4ed8] text-white"
                       : "border-[#dde1e8] bg-white text-[#5c6069]"

@@ -32,7 +32,7 @@ export default function RecipientSelect() {
               )}
               <div className="flex flex-1 flex-col gap-1">
                 <p className="text-[16px] font-semibold text-black">{r.name}</p>
-                <p className="text-[13px] text-[#818181]">
+                <p className="text-[14px] text-[#818181]">
                   {r.age}y · {r.relationship}
                 </p>
                 <span className="w-fit rounded-[4px] bg-[#ffedd4] px-2 py-0.5 text-[11px] font-semibold text-[#ca3500]">

@@ -64,8 +64,8 @@ export default function MemoryGame() {
         {!allMatched ? (
           <>
             <div className="mb-4 flex items-center justify-between">
-              <p className="text-[13px] text-[#818181]">Find the matching pairs</p>
-              <p className="text-[13px] font-semibold text-[#c2410c]">{moves} moves</p>
+              <p className="text-[14px] text-[#818181]">Find the matching pairs</p>
+              <p className="text-[14px] font-semibold text-[#c2410c]">{moves} moves</p>
             </div>
             <div className="grid grid-cols-3 gap-3">
               {deck.map((card) => {
@@ -75,7 +75,7 @@ export default function MemoryGame() {
                     key={card.id}
                     onClick={() => flip(card.id)}
                     disabled={card.matched}
-                    className={`flex aspect-square items-center justify-center rounded-[14px] text-[30px] transition ${
+                    className={`flex aspect-square items-center justify-center rounded-[14px] text-[24px] transition ${
                       card.matched ? "bg-[#dcfce7]" : shown ? "bg-white" : "bg-[#c2410c]"
                     }`}
                   >
@@ -89,12 +89,12 @@ export default function MemoryGame() {
           <div className="flex flex-1 flex-col items-center justify-center gap-4 text-center">
             <Sparkles size={44} className="text-[#c2410c]" />
             <p className="text-[20px] font-semibold text-black">All matched!</p>
-            <p className="text-[13px] text-[#818181]">Finished in {moves} moves.</p>
+            <p className="text-[14px] text-[#818181]">Finished in {moves} moves.</p>
             <div className="mt-2 flex w-full flex-col gap-2">
               <PrimaryButton onClick={() => navigate("/moments/log", { state: { kind: "game", title: "Memory Match" } })}>
                 Continue
               </PrimaryButton>
-              <button onClick={reset} className="flex items-center justify-center gap-2 py-2 text-[13px] font-medium text-[#818181]">
+              <button onClick={reset} className="flex items-center justify-center gap-2 py-2 text-[14px] font-medium text-[#818181]">
                 <RotateCcw size={14} /> Play again
               </button>
             </div>

@@ -25,7 +25,7 @@ export default function ConsultHub() {
       <div className="flex flex-1 flex-col gap-3 overflow-y-auto no-scrollbar px-6 py-4">
         <button
           onClick={() => navigate("/consult/new")}
-          className="flex items-center justify-center gap-2 rounded-[14px] bg-[#1d4ed8] py-4 text-[15px] font-semibold text-white"
+          className="flex items-center justify-center gap-2 rounded-[14px] bg-[#1d4ed8] py-4 text-[16px] font-semibold text-white"
         >
           <Plus size={20} /> Book a Consultation
         </button>
@@ -40,7 +40,7 @@ export default function ConsultHub() {
           </div>
         ) : (
           <>
-            <p className="mt-2 text-[13px] font-semibold text-black">Upcoming</p>
+            <p className="mt-2 text-[14px] font-semibold text-black">Upcoming</p>
             {upcoming.map((c) => {
               const sp = specialists.find((s) => s.id === c.specialistId);
               const Icon = sp ? TYPE_ICON[sp.type] : Stethoscope;

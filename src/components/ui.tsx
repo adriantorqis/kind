@@ -31,10 +31,10 @@ export function FormField({
 }: InputHTMLAttributes<HTMLInputElement> & { label: string }) {
   return (
     <label className="flex w-full flex-col gap-1.5">
-      <span className="text-[13px] font-semibold text-black">{label}</span>
+      <span className="text-[14px] font-semibold text-black">{label}</span>
       <input
         {...props}
-        className={`w-full rounded-[14px] border border-[#e2e8f0] bg-white px-4 py-3 text-[15px] text-black placeholder:text-[#acb3bb] outline-none focus:border-[#1d4ed8] ${className}`}
+        className={`w-full rounded-[14px] border border-[#e2e8f0] bg-white px-4 py-3 text-[16px] text-black placeholder:text-[#acb3bb] outline-none focus:border-[#1d4ed8] ${className}`}
       />
     </label>
   );
@@ -47,10 +47,10 @@ export function FormTextarea({
 }: TextareaHTMLAttributes<HTMLTextAreaElement> & { label: string }) {
   return (
     <label className="flex w-full flex-col gap-1.5">
-      <span className="text-[13px] font-semibold text-black">{label}</span>
+      <span className="text-[14px] font-semibold text-black">{label}</span>
       <textarea
         {...props}
-        className={`w-full rounded-[14px] border border-[#e2e8f0] bg-white px-4 py-3 text-[13px] text-black placeholder:text-[#acb3bb] outline-none focus:border-[#1d4ed8] ${className}`}
+        className={`w-full rounded-[14px] border border-[#e2e8f0] bg-white px-4 py-3 text-[14px] text-black placeholder:text-[#acb3bb] outline-none focus:border-[#1d4ed8] ${className}`}
       />
     </label>
   );

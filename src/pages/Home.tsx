@@ -68,8 +68,8 @@ export default function Home() {
         {/* ---- who, and how they are ---- */}
         <div className="flex items-start gap-4 px-6 pb-5 pt-1">
           <div className="flex-1">
-            <p className="text-[13px] text-[#8a8f99]">{greeting(now.getHours())}</p>
-            <h1 className="mt-0.5 text-[26px] font-semibold leading-tight tracking-[-0.02em] text-[#14161a]">
+            <p className="text-[14px] text-[#8a8f99]">{greeting(now.getHours())}</p>
+            <h1 className="mt-0.5 text-[24px] font-semibold leading-tight tracking-[-0.02em] text-[#14161a]">
               {activeAlerts.length > 0
                 ? "Something needs a look"
                 : done === activity.length
@@ -91,7 +91,7 @@ export default function Home() {
             {selectedRecipient.photo ? (
               <img src={selectedRecipient.photo} alt="" className="size-[52px] rounded-full object-cover" />
             ) : (
-              <div className="flex size-[52px] items-center justify-center rounded-full bg-[#dbeafe] text-[17px] font-semibold text-[#1d4ed8]">
+              <div className="flex size-[52px] items-center justify-center rounded-full bg-[#dbeafe] text-[16px] font-semibold text-[#1d4ed8]">
                 {first[0]}
               </div>
             )}
@@ -106,10 +106,10 @@ export default function Home() {
           >
             <TriangleAlert size={17} className="mt-0.5 shrink-0 text-[#a3123f]" />
             <div className="flex-1">
-              <p className="text-[13.5px] font-semibold text-[#7d1233]">
+              <p className="text-[14px] font-semibold text-[#7d1233]">
                 {activeAlerts[0].severity} · {activeAlerts[0].symptom}
               </p>
-              <p className="text-[12.5px] leading-snug text-[#9c5670]">
+              <p className="text-[12px] leading-snug text-[#9c5670]">
                 {activeAlerts[0].note || "Logged by the circle, not yet acknowledged."}
                 {activeAlerts.length > 1 && ` · ${activeAlerts.length - 1} more`}
               </p>
@@ -134,7 +134,7 @@ export default function Home() {
                     onClick={() => navigate("/activity")}
                     className="flex w-full items-center gap-3 px-6 py-2.5 text-left"
                   >
-                    <span className="w-[42px] shrink-0 text-[13px] tabular-nums text-[#8a8f99]">{t.time}</span>
+                    <span className="w-[42px] shrink-0 text-[14px] tabular-nums text-[#8a8f99]">{t.time}</span>
                     <span
                       className={`flex size-[18px] shrink-0 items-center justify-center rounded-full border ${
                         t.done ? "border-[#2f6b39] bg-[#2f6b39] text-white" : isNext ? "border-[#1d4ed8]" : "border-[#d3d6dc]"
@@ -143,7 +143,7 @@ export default function Home() {
                       {t.done && <Check size={11} strokeWidth={3} />}
                     </span>
                     <span
-                      className={`flex-1 text-[14.5px] ${
+                      className={`flex-1 text-[14px] ${
                         t.done ? "text-[#a6abb4] line-through" : isNext ? "font-semibold text-[#14161a]" : "text-[#14161a]"
                       }`}
                     >
@@ -157,7 +157,7 @@ export default function Home() {
           </ul>
           <button
             onClick={() => navigate("/activity")}
-            className="flex w-full items-center justify-between px-6 pb-3.5 pt-2 text-[13px] font-medium text-[#1d4ed8]"
+            className="flex w-full items-center justify-between px-6 pb-3.5 pt-2 text-[14px] font-medium text-[#1d4ed8]"
           >
             See the full day
             <ChevronRight size={15} />
@@ -178,8 +178,8 @@ export default function Home() {
                 {moment.photo && <img src={moment.photo} alt="" className="size-full object-cover" />}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 px-6 pb-3">
-                  <p className="text-[17px] font-semibold leading-tight text-white">{moment.title}</p>
-                  <p className="text-[12.5px] text-white/70">
+                  <p className="text-[16px] font-semibold leading-tight text-white">{moment.title}</p>
+                  <p className="text-[12px] text-white/70">
                     {moment.year} · {moment.type}
                   </p>
                 </div>
@@ -190,10 +190,10 @@ export default function Home() {
                 <p className="text-[11px] font-semibold uppercase tracking-[0.09em] text-[#8a8f99]">
                   Try saying to {first}
                 </p>
-                <p className="mt-1.5 text-[15px] italic leading-snug text-[#2b2f36]">"{moment.prompt}"</p>
+                <p className="mt-1.5 text-[16px] italic leading-snug text-[#2b2f36]">"{moment.prompt}"</p>
                 <button
                   onClick={() => navigate(`/memory-book/story?start=${moment.id}`)}
-                  className="-ml-1 mt-1.5 flex min-h-11 items-center gap-1.5 px-1 text-[13px] font-semibold text-[#1d4ed8]"
+                  className="-ml-1 mt-1.5 flex min-h-11 items-center gap-1.5 px-1 text-[14px] font-semibold text-[#1d4ed8]"
                 >
                   Read this one together
                   <ChevronRight size={14} />
@@ -214,8 +214,8 @@ export default function Home() {
               className="flex w-full items-start gap-3 border-y border-[#e6e8ec] bg-white px-6 py-3.5 text-left"
             >
               <div className="flex-1">
-                <p className="text-[15px] font-semibold leading-snug text-[#14161a]">{suggested.title}</p>
-                <p className="mt-1 text-[12.5px] text-[#8a8f99]">
+                <p className="text-[16px] font-semibold leading-snug text-[#14161a]">{suggested.title}</p>
+                <p className="mt-1 text-[12px] text-[#8a8f99]">
                   {suggestedWhy} · {suggested.readMins} min
                 </p>
               </div>
@@ -239,7 +239,7 @@ export default function Home() {
                 </span>
               ))}
             </div>
-            <p className="flex-1 text-[13px] text-[#5c6069]">
+            <p className="flex-1 text-[14px] text-[#5c6069]">
               {onDuty.length > 0
                 ? `${onDuty.map((m) => m.name).join(" and ")} still ${onDuty.length > 1 ? "have" : "has"} tasks today`
                 : "Everything assigned today is done"}
@@ -253,7 +253,7 @@ export default function Home() {
               className="mt-3 flex w-full items-center gap-3 rounded-[10px] border border-[#dde1e8] bg-white px-4 py-3 text-left"
             >
               <div className="flex-1">
-                <p className="text-[13.5px] font-semibold text-[#14161a]">{upcoming.reason}</p>
+                <p className="text-[14px] font-semibold text-[#14161a]">{upcoming.reason}</p>
                 <p className="text-[12px] text-[#8a8f99]">
                   {upcoming.date} · {upcoming.time}
                 </p>

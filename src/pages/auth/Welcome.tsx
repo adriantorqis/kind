@@ -11,9 +11,9 @@ export default function Welcome() {
           className="mb-10 flex size-[88px] items-center justify-center rounded-[22px] shadow-lg"
           style={{ backgroundImage: "linear-gradient(180deg, rgb(40,111,227) 0%, rgb(22,61,125) 100%)" }}
         >
-          <span className="text-[42px] font-bold text-white">K</span>
+          <span className="text-[24px] font-bold text-white">K</span>
         </div>
-        <p className="mb-6 text-center text-[15px] text-[#818181]">
+        <p className="mb-6 text-center text-[16px] text-[#818181]">
           A calmer way to care for someone with dementia.
         </p>
         <PrimaryButton pill onClick={() => navigate("/signup/name")}>

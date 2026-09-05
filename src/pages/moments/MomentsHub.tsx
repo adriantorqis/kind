@@ -27,7 +27,7 @@ export default function MomentsHub() {
     <PhoneShell noScroll gradient="from-[#fff7ec] to-[#ffe9d6]">
       <div className="flex shrink-0 flex-col gap-1 px-6 pt-4">
         <p className="text-[12px] font-semibold uppercase tracking-wide text-[#c2410c]">Kindred Moments</p>
-        <h1 className="text-[22px] font-semibold text-black">
+        <h1 className="text-[24px] font-semibold text-black">
           Time with {selectedRecipient?.name.split(" ")[0] ?? "them"}
         </h1>
       </div>
@@ -42,7 +42,7 @@ export default function MomentsHub() {
           </div>
           <div className="flex-1">
             <p className="text-[11px] font-semibold uppercase tracking-wide text-[#c2410c]">Recommended today</p>
-            <p className="text-[15px] font-semibold text-black">{recommendedMoment.title}</p>
+            <p className="text-[16px] font-semibold text-black">{recommendedMoment.title}</p>
             <p className="text-[12px] text-[#818181]">{recommendedMoment.reason}</p>
           </div>
           <ChevronRight size={20} className="text-[#c4c4c4]" />
@@ -59,7 +59,7 @@ export default function MomentsHub() {
                 <t.icon size={20} />
               </div>
               <div className="flex-1">
-                <p className="text-[15px] font-semibold text-black">{t.title}</p>
+                <p className="text-[16px] font-semibold text-black">{t.title}</p>
                 <p className="text-[12px] text-[#818181]">
                   {t.desc} · usually {t.forStage.replace(" Stage", "")}
                 </p>
@@ -71,14 +71,14 @@ export default function MomentsHub() {
 
         {engagementLog.length > 0 && (
           <div className="flex flex-col gap-2">
-            <p className="text-[13px] font-semibold text-black">Recent sessions</p>
+            <p className="text-[14px] font-semibold text-black">Recent sessions</p>
             {engagementLog.slice(0, 4).map((e) => (
               <div key={e.id} className="flex items-center gap-3 rounded-[14px] bg-white/70 p-3">
-                <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#fff0e0] text-[15px]">
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#fff0e0] text-[16px]">
                   {e.mood ?? <Clock size={14} className="text-[#c2410c]" />}
                 </div>
                 <div className="flex-1">
-                  <p className="text-[13px] font-semibold text-black">{e.title}</p>
+                  <p className="text-[14px] font-semibold text-black">{e.title}</p>
                   <p className="text-[11px] text-[#9e9e9e]">{timeAgo(e.at)}</p>
                 </div>
               </div>

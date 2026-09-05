@@ -33,8 +33,8 @@ export default function LogSymptom() {
           {severity !== "Mild" ? (
             <>
               <AlertTriangle size={44} className="text-[#a3123f]" />
-              <p className="text-[18px] font-semibold text-black">Logged & flagged to the Circle</p>
-              <p className="text-[13px] text-[#818181]">
+              <p className="text-[20px] font-semibold text-black">Logged & flagged to the Circle</p>
+              <p className="text-[14px] text-[#818181]">
                 Family members will see this as an alert. Consider a consultation if it continues.
               </p>
             </>
@@ -51,7 +51,7 @@ export default function LogSymptom() {
     <PhoneShell noScroll>
       <ScreenHeader title="Log a Symptom" />
       <div className="flex flex-1 flex-col gap-5 overflow-y-auto no-scrollbar px-6 py-5">
-        <p className="text-[13px] text-[#818181]">
+        <p className="text-[14px] text-[#818181]">
           For {selectedRecipient?.name ?? "your recipient"} — this feeds the family's shared timeline and, for anything
           moderate or above, raises an alert the whole Circle can see.
         </p>

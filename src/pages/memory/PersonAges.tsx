@@ -45,7 +45,7 @@ export default function PersonAges() {
         <p className="text-[16px] text-[#6b5a42]">There's no photo box to look through yet.</p>
         <button
           onClick={backTo}
-          className="rounded-[10px] bg-[#1d4ed8] px-6 py-3 text-[15px] font-semibold text-white"
+          className="rounded-[10px] bg-[#1d4ed8] px-6 py-3 text-[16px] font-semibold text-white"
         >
           Back to their page
         </button>
@@ -63,7 +63,7 @@ export default function PersonAges() {
           <p className="text-[24px] font-semibold leading-tight tracking-[-0.02em] text-[#3d3222]">
             That's every photo of {person.name.split(" ")[0]} we have
           </p>
-          <p className="mt-2 text-[15px] leading-relaxed text-[#6b5a42]">
+          <p className="mt-2 text-[16px] leading-relaxed text-[#6b5a42]">
             {sorted.length} {sorted.length === 1 ? "year" : "years"}, {sorted[0].year}–{sorted[sorted.length - 1].year}
           </p>
           <div className="mt-8 flex w-full flex-col gap-3">
@@ -106,7 +106,7 @@ export default function PersonAges() {
         >
           <X size={20} />
         </button>
-        <p className={`font-semibold text-[#3d3222] ${handedOver ? "text-[16px]" : "text-[13px]"}`}>
+        <p className={`font-semibold text-[#3d3222] ${handedOver ? "text-[16px]" : "text-[14px]"}`}>
           {handedOver ? person.name.split(" ")[0] : `${person.name} through the years`}
         </p>
         <button
@@ -128,7 +128,7 @@ export default function PersonAges() {
           />
           <p
             className={`mt-3 text-center font-bold tabular-nums text-[#4a3c2a] ${
-              handedOver ? "text-[34px]" : "text-[26px]"
+              handedOver ? "text-[24px]" : "text-[24px]"
             }`}
           >
             {current.year}
@@ -138,13 +138,13 @@ export default function PersonAges() {
         {!handedOver && !isCover && (
           <button
             onClick={() => setPrimaryPhoto(person.id, current.id)}
-            className="mt-4 flex min-h-11 items-center gap-1.5 rounded-full px-4 text-[13.5px] font-semibold text-[#1d4ed8] active:bg-black/5"
+            className="mt-4 flex min-h-11 items-center gap-1.5 rounded-full px-4 text-[14px] font-semibold text-[#1d4ed8] active:bg-black/5"
           >
             <Star size={14} /> Make this the one everyone sees
           </button>
         )}
         {!handedOver && isCover && (
-          <p className="mt-4 flex min-h-11 items-center gap-1.5 text-[13px] font-medium text-[#8a7452]">
+          <p className="mt-4 flex min-h-11 items-center gap-1.5 text-[14px] font-medium text-[#8a7452]">
             <Star size={13} fill="#8a7452" /> This is the main photo
           </p>
         )}
@@ -163,7 +163,7 @@ export default function PersonAges() {
               }`}
             >
               <img src={p.photo} alt="" className="size-11 rounded-[1px] object-cover" />
-              <p className="mt-0.5 text-center text-[9px] tabular-nums text-[#6b5a42]">{p.year}</p>
+              <p className="mt-0.5 text-center text-[11px] tabular-nums text-[#6b5a42]">{p.year}</p>
             </button>
           ))}
         </div>
@@ -174,16 +174,16 @@ export default function PersonAges() {
         <button
           onClick={() => setI((v) => Math.max(v - 1, 0))}
           disabled={i === 0}
-          className="flex min-h-[52px] items-center gap-1 rounded-[12px] px-4 text-[15px] font-semibold text-[#1d4ed8] disabled:opacity-25"
+          className="flex min-h-[52px] items-center gap-1 rounded-[12px] px-4 text-[16px] font-semibold text-[#1d4ed8] disabled:opacity-25"
         >
           <ChevronLeft size={22} /> Back
         </button>
-        <span className="text-[13px] tabular-nums text-[#8a7452]">
+        <span className="text-[14px] tabular-nums text-[#8a7452]">
           {i + 1} of {sorted.length}
         </span>
         <button
           onClick={() => setI((v) => v + 1)}
-          className="flex min-h-[52px] items-center gap-1 rounded-[12px] bg-[#1d4ed8] px-5 text-[15px] font-semibold text-white"
+          className="flex min-h-[52px] items-center gap-1 rounded-[12px] bg-[#1d4ed8] px-5 text-[16px] font-semibold text-white"
         >
           Next <ChevronRight size={22} />
         </button>

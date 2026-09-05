@@ -17,7 +17,7 @@ export default function PersonDetail() {
       <PhoneShell gradient="from-[#f6efe1] to-[#f6efe1]">
         <ScreenHeader title="Person" onBack={() => navigate("/memory-book")} />
         <div className="flex flex-1 items-center justify-center px-10 text-center">
-          <p className="text-[15px] text-[#8a7452]">This person is no longer in the book.</p>
+          <p className="text-[16px] text-[#8a7452]">This person is no longer in the book.</p>
         </div>
         <HomeIndicator />
       </PhoneShell>
@@ -65,7 +65,7 @@ export default function PersonDetail() {
             </span>
           )}
           <div className="flex-1">
-            <h1 className="text-[22px] font-semibold leading-tight tracking-[-0.02em] text-[#3d3222]">
+            <h1 className="text-[24px] font-semibold leading-tight tracking-[-0.02em] text-[#3d3222]">
               {person.name}
             </h1>
             <p className="text-[14px] text-[#8a7452]">{person.relationship}</p>
@@ -78,11 +78,11 @@ export default function PersonDetail() {
         </div>
 
         <div className="mb-2 flex items-center justify-between px-1">
-          <p className="text-[13px] font-semibold text-[#4a3c2a]">Their photo box</p>
+          <p className="text-[14px] font-semibold text-[#4a3c2a]">Their photo box</p>
           {(person.photos?.length ?? 0) > 1 && (
             <button
               onClick={() => navigate(`/memory-book/people/${person.id}/ages`)}
-              className="-mr-1 flex min-h-11 items-center gap-1 px-1 text-[12.5px] font-semibold text-[#1d4ed8]"
+              className="-mr-1 flex min-h-11 items-center gap-1 px-1 text-[12px] font-semibold text-[#1d4ed8]"
             >
               <Clock size={13} /> See through the years
             </button>
@@ -106,7 +106,7 @@ export default function PersonDetail() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#8a7452]">
               What helps when they come up
             </p>
-            <p className="mt-1.5 text-[15px] leading-relaxed text-[#2b2f36]">{person.note}</p>
+            <p className="mt-1.5 text-[16px] leading-relaxed text-[#2b2f36]">{person.note}</p>
           </div>
         )}
 
@@ -127,8 +127,8 @@ export default function PersonDetail() {
                 >
                   {m.photo && <img src={m.photo} alt="" className="size-12 shrink-0 rounded-[8px] object-cover" />}
                   <div className="flex-1">
-                    <p className="text-[14.5px] font-semibold leading-snug text-[#14161a]">{m.title}</p>
-                    <p className="text-[12.5px] text-[#8a7452]">{m.year}</p>
+                    <p className="text-[14px] font-semibold leading-snug text-[#14161a]">{m.title}</p>
+                    <p className="text-[12px] text-[#8a7452]">{m.year}</p>
                   </div>
                 </button>
               ))}
@@ -141,7 +141,7 @@ export default function PersonDetail() {
             </button>
           </>
         ) : (
-          <p className="mt-2 rounded-[12px] border border-dashed border-[#d8c9a8] px-4 py-5 text-center text-[13.5px] text-[#8a7452]">
+          <p className="mt-2 rounded-[12px] border border-dashed border-[#d8c9a8] px-4 py-5 text-center text-[14px] text-[#8a7452]">
             No memories tagged with {person.name} yet. Tag them when you add or edit a memory.
           </p>
         )}

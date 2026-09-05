@@ -47,10 +47,10 @@ export default function StoryMode() {
   if (pages.length === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-4 bg-white px-10 text-center">
-        <p className="text-[17px] text-[#5c6069]">There are no memories to read yet.</p>
+        <p className="text-[16px] text-[#5c6069]">There are no memories to read yet.</p>
         <button
           onClick={() => navigate("/memory-book")}
-          className="rounded-[12px] bg-[#1d4ed8] px-6 py-3 text-[15px] font-semibold text-white"
+          className="rounded-[12px] bg-[#1d4ed8] px-6 py-3 text-[16px] font-semibold text-white"
         >
           Back to the book
         </button>
@@ -63,10 +63,10 @@ export default function StoryMode() {
     return (
       <div className="flex h-full flex-col bg-white">
         <div className="flex flex-1 flex-col items-center justify-center px-10 text-center">
-          <p className="text-[26px] font-semibold leading-tight tracking-[-0.02em] text-[#14161a]">
+          <p className="text-[24px] font-semibold leading-tight tracking-[-0.02em] text-[#14161a]">
             That's the end of the book
           </p>
-          <p className="mt-3 text-[17px] leading-relaxed text-[#5c6069]">
+          <p className="mt-3 text-[16px] leading-relaxed text-[#5c6069]">
             You read {pages.length} {pages.length === 1 ? "memory" : "memories"} with {first}.
           </p>
           <div className="mt-8 flex w-full flex-col gap-3">
@@ -78,7 +78,7 @@ export default function StoryMode() {
             </button>
             <button
               onClick={() => setI(0)}
-              className="flex items-center justify-center gap-2 rounded-[12px] border border-[#dde1e8] py-4 text-[15px] font-semibold text-[#14161a]"
+              className="flex items-center justify-center gap-2 rounded-[12px] border border-[#dde1e8] py-4 text-[16px] font-semibold text-[#14161a]"
             >
               <RotateCcw size={16} /> Read it again
             </button>
@@ -121,7 +121,7 @@ export default function StoryMode() {
         </button>
         <button
           onClick={() => setHandedOver((v) => !v)}
-          className="flex min-h-11 items-center gap-1.5 rounded-full px-3 text-[13px] font-semibold text-[#1d4ed8] active:bg-black/5"
+          className="flex min-h-11 items-center gap-1.5 rounded-full px-3 text-[14px] font-semibold text-[#1d4ed8] active:bg-black/5"
         >
           {handedOver ? <Eye size={15} /> : <EyeOff size={15} />}
           {handedOver ? "Caregiver view" : `Hand to ${first}`}
@@ -134,7 +134,7 @@ export default function StoryMode() {
           <div className="relative shrink-0">
             <img src={memory.photo} alt="" className="h-[270px] w-full object-cover" />
             <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/60 to-transparent" />
-            <p className="absolute bottom-3 left-6 text-[38px] font-bold leading-none tracking-[-0.02em] text-white tabular-nums">
+            <p className="absolute bottom-3 left-6 text-[24px] font-bold leading-none tracking-[-0.02em] text-white tabular-nums">
               {memory.year}
             </p>
           </div>
@@ -143,7 +143,7 @@ export default function StoryMode() {
         <div className="px-6 pb-6 pt-5">
           <h1
             className={`font-semibold leading-tight tracking-[-0.02em] text-[#14161a] ${
-              handedOver ? "text-[30px]" : "text-[25px]"
+              handedOver ? "text-[24px]" : "text-[24px]"
             }`}
           >
             {memory.title}
@@ -151,7 +151,7 @@ export default function StoryMode() {
 
           {memory.story && (
             <p
-              className={`mt-3 leading-relaxed text-[#2b2f36] ${handedOver ? "text-[20px]" : "text-[17px]"}`}
+              className={`mt-3 leading-relaxed text-[#2b2f36] ${handedOver ? "text-[20px]" : "text-[16px]"}`}
             >
               {memory.story}
             </p>
@@ -167,7 +167,7 @@ export default function StoryMode() {
                   <span className="flex size-7 items-center justify-center rounded-full bg-[#1d4ed8] text-[12px] font-semibold text-white">
                     {p.name[0]}
                   </span>
-                  <span className={`font-medium text-[#1d4ed8] ${handedOver ? "text-[15px]" : "text-[13.5px]"}`}>
+                  <span className={`font-medium text-[#1d4ed8] ${handedOver ? "text-[16px]" : "text-[14px]"}`}>
                     {p.name} <span className="font-normal opacity-70">· {p.relationship.toLowerCase()}</span>
                   </span>
                 </span>
@@ -186,7 +186,7 @@ export default function StoryMode() {
               <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#1d4ed8]">
                 Try saying to {first}
               </p>
-              <p className="mt-1 text-[14.5px] italic leading-snug text-[#2b2f36]">"{memory.prompt}"</p>
+              <p className="mt-1 text-[14px] italic leading-snug text-[#2b2f36]">"{memory.prompt}"</p>
             </div>
           </div>
         </div>
@@ -197,16 +197,16 @@ export default function StoryMode() {
         <button
           onClick={() => setI((v) => Math.max(v - 1, 0))}
           disabled={i === 0}
-          className="flex min-h-[52px] items-center gap-1 rounded-[12px] px-4 text-[15px] font-semibold text-[#1d4ed8] disabled:opacity-25"
+          className="flex min-h-[52px] items-center gap-1 rounded-[12px] px-4 text-[16px] font-semibold text-[#1d4ed8] disabled:opacity-25"
         >
           <ChevronLeft size={22} /> Back
         </button>
-        <span className="text-[13px] tabular-nums text-[#8a8f99]">
+        <span className="text-[14px] tabular-nums text-[#8a8f99]">
           {i + 1} of {pages.length}
         </span>
         <button
           onClick={() => setI((v) => v + 1)}
-          className="flex min-h-[52px] items-center gap-1 rounded-[12px] bg-[#1d4ed8] px-5 text-[15px] font-semibold text-white"
+          className="flex min-h-[52px] items-center gap-1 rounded-[12px] bg-[#1d4ed8] px-5 text-[16px] font-semibold text-white"
         >
           Next <ChevronRight size={22} />
         </button>

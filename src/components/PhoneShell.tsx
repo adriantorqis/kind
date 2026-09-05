@@ -16,7 +16,7 @@ function StatusBar({ light = false }: { light?: boolean }) {
   const time = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
   return (
     <div className={`flex h-[52px] items-center justify-between px-4 shrink-0 ${color}`}>
-      <p className="text-[17px] font-semibold tabular-nums">{time}</p>
+      <p className="text-[16px] font-semibold tabular-nums">{time}</p>
       <div className="flex items-center gap-1.5">
         <Signal size={15} strokeWidth={2.5} />
         <Wifi size={15} strokeWidth={2.5} />

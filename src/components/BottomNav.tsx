@@ -20,7 +20,7 @@ export function BottomNav() {
           }
         >
           <Icon size={23} />
-          <span className="text-[10.5px] font-medium">{label}</span>
+          <span className="text-[11px] font-medium">{label}</span>
         </NavLink>
       ))}
     </div>

@@ -29,7 +29,7 @@ export default function AddFamilyMember() {
           navigate("/circle");
         }}
       >
-        <p className="text-[13px] text-[#818181]">
+        <p className="text-[14px] text-[#818181]">
           Invited members share visibility into tasks, mood trends, and can be assigned to a routine.
         </p>
         <FormField label="Name*" placeholder="Enter their name" value={name} onChange={(e) => setName(e.target.value)} required />

@@ -71,7 +71,7 @@ export default function BookConsultation() {
       <div className="flex flex-1 flex-col gap-4 overflow-y-auto no-scrollbar px-6 py-4">
         {step === 1 && (
           <>
-            <p className="text-[13px] text-[#818181]">Who would help most right now?</p>
+            <p className="text-[14px] text-[#818181]">Who would help most right now?</p>
             {typeOptions.map((t) => {
               const Meta = TYPE_META[t];
               return (
@@ -87,7 +87,7 @@ export default function BookConsultation() {
                     <Meta.icon size={20} />
                   </div>
                   <div>
-                    <p className="text-[15px] font-semibold text-black">{t}</p>
+                    <p className="text-[16px] font-semibold text-black">{t}</p>
                     <p className="text-[12px] text-[#818181]">{Meta.desc}</p>
                   </div>
                 </button>
@@ -98,10 +98,10 @@ export default function BookConsultation() {
 
         {step === 2 && (
           <>
-            <p className="text-[13px] text-[#818181]">Available {type}s</p>
+            <p className="text-[14px] text-[#818181]">Available {type}s</p>
             {shortlisted.map((s) => (
               <div key={s.id} className="rounded-[14px] bg-white p-4">
-                <p className="text-[15px] font-semibold text-black">{s.name}</p>
+                <p className="text-[16px] font-semibold text-black">{s.name}</p>
                 <p className="text-[12px] text-[#818181]">
                   {s.title} · {s.clinic}
                 </p>
@@ -114,7 +114,7 @@ export default function BookConsultation() {
                         setSlot(sl);
                         setStep(3);
                       }}
-                      className="rounded-[10px] border border-[#e2e8f0] py-2.5 text-[13px] font-medium text-[#1d4ed8]"
+                      className="rounded-[10px] border border-[#e2e8f0] py-2.5 text-[14px] font-medium text-[#1d4ed8]"
                     >
                       {sl}
                     </button>
@@ -128,7 +128,7 @@ export default function BookConsultation() {
         {step === 3 && (
           <>
             <div className="rounded-[14px] bg-white p-4">
-              <p className="text-[13px] font-semibold text-black">{specialist?.name}</p>
+              <p className="text-[14px] font-semibold text-black">{specialist?.name}</p>
               <p className="text-[12px] text-[#818181]">{slot}</p>
             </div>
             <FormTextarea

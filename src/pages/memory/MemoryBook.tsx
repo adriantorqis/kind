@@ -76,7 +76,7 @@ export default function MemoryBook() {
               <p className="text-[16px] font-semibold leading-tight text-[#14161a]">
                 Read {first}'s book together
               </p>
-              <p className="mt-0.5 text-[12.5px] text-[#8a8f99]">
+              <p className="mt-0.5 text-[12px] text-[#8a8f99]">
                 {memories.length} {memories.length === 1 ? "memory" : "memories"}
                 {span && ` · ${span}`}
               </p>
@@ -106,7 +106,7 @@ export default function MemoryBook() {
                   {p.photo ? (
                     <img src={p.photo} alt="" className="size-14 rounded-full object-cover" />
                   ) : (
-                    <span className="flex size-14 items-center justify-center rounded-full bg-[#eef2ff] text-[19px] font-semibold text-[#1d4ed8]">
+                    <span className="flex size-14 items-center justify-center rounded-full bg-[#eef2ff] text-[20px] font-semibold text-[#1d4ed8]">
                       {p.name[0]}
                     </span>
                   )}
@@ -138,7 +138,7 @@ export default function MemoryBook() {
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search a year, a place, a name…"
-              className="min-w-0 flex-1 bg-transparent py-3 text-[14.5px] text-[#14161a] outline-none placeholder:text-[#a6abb4]"
+              className="min-w-0 flex-1 bg-transparent py-3 text-[14px] text-[#14161a] outline-none placeholder:text-[#a6abb4]"
             />
             {q && (
               <button
@@ -162,7 +162,7 @@ export default function MemoryBook() {
           ) : (
             Object.entries(grouped).map(([decade, items]) => (
               <div key={decade}>
-                <p className="pb-2 pt-1 text-[13px] font-bold tabular-nums text-[#1d4ed8]">{decade}</p>
+                <p className="pb-2 pt-1 text-[14px] font-bold tabular-nums text-[#1d4ed8]">{decade}</p>
                 <div className="relative border-l border-[#dbe0e8] pl-5">
                   {items.map((m) => (
                     <div key={m.id} className="relative pb-3">
@@ -175,12 +175,12 @@ export default function MemoryBook() {
                           <img src={m.photo} alt="" className="size-[58px] shrink-0 rounded-[9px] object-cover" />
                         )}
                         <div className="min-w-0 flex-1">
-                          <p className="text-[14.5px] font-semibold leading-snug text-[#14161a]">{m.title}</p>
+                          <p className="text-[14px] font-semibold leading-snug text-[#14161a]">{m.title}</p>
                           <p className="text-[12px] tabular-nums text-[#8a8f99]">
                             {m.year} · {m.type}
                           </p>
                           {m.story && (
-                            <p className="mt-1 line-clamp-2 text-[12.5px] leading-snug text-[#5c6069]">{m.story}</p>
+                            <p className="mt-1 line-clamp-2 text-[12px] leading-snug text-[#5c6069]">{m.story}</p>
                           )}
                         </div>
                       </button>

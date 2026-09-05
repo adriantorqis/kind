@@ -20,7 +20,7 @@ export default function CircleHub() {
     <PhoneShell noScroll gradient="from-[#faf5ff] to-[#f1e8ff]">
       <div className="flex shrink-0 flex-col gap-1 px-6 pt-4">
         <p className="text-[12px] font-semibold uppercase tracking-wide text-[#6b4bbd]">Network</p>
-        <h1 className="text-[22px] font-semibold text-black">Circle</h1>
+        <h1 className="text-[24px] font-semibold text-black">Circle</h1>
       </div>
 
       <div className="flex flex-1 flex-col gap-5 overflow-y-auto no-scrollbar px-6 py-4">
@@ -30,7 +30,7 @@ export default function CircleHub() {
               <div key={a.id} className="flex items-start gap-3 rounded-[14px] border-2 border-[#a3123f]/40 bg-[#f7dde5] p-4">
                 <AlertTriangle size={18} className="mt-0.5 shrink-0 text-[#a3123f]" />
                 <div className="flex-1">
-                  <p className="text-[13px] font-semibold text-[#a3123f]">
+                  <p className="text-[14px] font-semibold text-[#a3123f]">
                     {a.severity} · {a.symptom}
                   </p>
                   {a.note && <p className="mt-0.5 text-[12px] text-[#7a1a37]">{a.note}</p>}
@@ -63,7 +63,7 @@ export default function CircleHub() {
 
         <div>
           <div className="mb-2 flex items-center justify-between">
-            <p className="text-[13px] font-semibold text-black">Family ({family.length})</p>
+            <p className="text-[14px] font-semibold text-black">Family ({family.length})</p>
             <button onClick={() => navigate("/circle/add")} className="flex items-center gap-1 text-[12px] font-semibold text-[#6b4bbd]">
               <UserPlus size={14} /> Add
             </button>
@@ -72,13 +72,13 @@ export default function CircleHub() {
             {ROLE_ORDER.flatMap((role) => family.filter((f) => f.role === role)).map((m) => (
               <div key={m.id} className="flex items-center gap-3 rounded-[14px] bg-white p-3">
                 <div
-                  className="flex size-10 shrink-0 items-center justify-center rounded-full text-[13px] font-semibold text-white"
+                  className="flex size-10 shrink-0 items-center justify-center rounded-full text-[14px] font-semibold text-white"
                   style={{ backgroundColor: m.color }}
                 >
                   {m.name[0]}
                 </div>
                 <div>
-                  <p className="text-[13px] font-semibold text-black">{m.name}</p>
+                  <p className="text-[14px] font-semibold text-black">{m.name}</p>
                   <p className="text-[11px] text-[#9e9e9e]">
                     {m.role} · {m.relationship}
                   </p>
@@ -90,7 +90,7 @@ export default function CircleHub() {
 
         <div>
           <div className="mb-2 flex items-center justify-between">
-            <p className="text-[13px] font-semibold text-black">Who's doing what</p>
+            <p className="text-[14px] font-semibold text-black">Who's doing what</p>
             <button onClick={() => navigate("/circle/log-symptom")} className="flex items-center gap-1 text-[12px] font-semibold text-[#6b4bbd]">
               <ClipboardPlus size={14} /> Log symptom
             </button>
@@ -113,7 +113,7 @@ export default function CircleHub() {
                       {assignee ? assignee.name[0] : "?"}
                     </div>
                     <div className="flex-1">
-                      <p className={`text-[13px] font-semibold ${task.done ? "text-[#9e9e9e] line-through" : "text-black"}`}>
+                      <p className={`text-[14px] font-semibold ${task.done ? "text-[#9e9e9e] line-through" : "text-black"}`}>
                         {task.title}
                       </p>
                       <p className="text-[11px] text-[#9e9e9e]">
@@ -134,7 +134,7 @@ export default function CircleHub() {
                           className="flex items-center gap-1.5 rounded-full border border-[#e2e8f0] py-1.5 pl-1.5 pr-3 text-[12px] font-medium text-black"
                         >
                           <span
-                            className="flex size-5 items-center justify-center rounded-full text-[10px] text-white"
+                            className="flex size-5 items-center justify-center rounded-full text-[11px] text-white"
                             style={{ backgroundColor: m.color }}
                           >
                             {m.name[0]}

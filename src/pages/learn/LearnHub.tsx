@@ -40,7 +40,7 @@ export default function LearnHub() {
       <div className="flex shrink-0 flex-col gap-3 px-6 pt-4">
         <div>
           <p className="text-[12px] font-semibold uppercase tracking-wide text-[#0b6b62]">Informed Caregiving</p>
-          <h1 className="text-[22px] font-semibold text-black">Learn</h1>
+          <h1 className="text-[24px] font-semibold text-black">Learn</h1>
         </div>
         <div className="flex items-center gap-2 rounded-[14px] bg-white px-4 py-3">
           <Search size={18} className="text-[#9e9e9e]" />
@@ -62,7 +62,7 @@ export default function LearnHub() {
             <Sparkles size={20} />
           </div>
           <div className="flex-1">
-            <p className="text-[15px] font-semibold text-black">Ask a quick question</p>
+            <p className="text-[16px] font-semibold text-black">Ask a quick question</p>
             <p className="text-[12px] text-[#818181]">AI-assisted, answers from this library only</p>
           </div>
           <ChevronRight size={20} className="text-[#c4c4c4]" />
@@ -78,7 +78,7 @@ export default function LearnHub() {
 
         <div className="flex flex-col gap-2">
           {filtered.length === 0 && (
-            <p className="py-8 text-center text-[13px] text-[#9e9e9e]">No articles match that search.</p>
+            <p className="py-8 text-center text-[14px] text-[#9e9e9e]">No articles match that search.</p>
           )}
           {filtered.map((a) => (
             <button
@@ -86,11 +86,11 @@ export default function LearnHub() {
               onClick={() => navigate(`/learn/${a.id}`)}
               className="flex flex-col gap-2 rounded-[14px] bg-white p-4 text-left"
             >
-              <span className={`w-fit rounded-[4px] px-2 py-0.5 text-[10px] font-semibold ${TAG_COLOR[a.tag]}`}>
+              <span className={`w-fit rounded-[4px] px-2 py-0.5 text-[11px] font-semibold ${TAG_COLOR[a.tag]}`}>
                 {a.tag}
               </span>
-              <p className="text-[15px] font-semibold leading-tight text-black">{a.title}</p>
-              <p className="text-[13px] leading-snug text-[#818181]">{a.summary}</p>
+              <p className="text-[16px] font-semibold leading-tight text-black">{a.title}</p>
+              <p className="text-[14px] leading-snug text-[#818181]">{a.summary}</p>
               <span className="flex items-center gap-1 text-[11px] text-[#9e9e9e]">
                 <Clock size={11} /> {a.readMins} min read
               </span>

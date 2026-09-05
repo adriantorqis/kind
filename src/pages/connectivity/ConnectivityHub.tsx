@@ -51,7 +51,7 @@ export default function ConnectivityHub() {
               <div className="rounded-[14px] bg-white p-4">
                 <p className="mb-1 text-[12px] font-bold text-black">Heart Rate</p>
                 <div className="flex items-end gap-1">
-                  <span className="text-[32px] font-bold leading-none text-black">{heartRate}</span>
+                  <span className="text-[24px] font-bold leading-none text-black">{heartRate}</span>
                   <span className="pb-1 text-[16px] text-black/50">bpm</span>
                 </div>
                 <span className="mt-2 inline-flex items-center gap-1 rounded-[6px] bg-[#dcfce7] px-2 py-1 text-[12px] font-semibold text-[#008236]">
@@ -61,9 +61,9 @@ export default function ConnectivityHub() {
               <div className="rounded-[14px] bg-white p-4">
                 <p className="mb-1 text-[12px] font-bold text-black">Sleep</p>
                 <div className="flex items-end gap-1">
-                  <span className="text-[32px] font-bold leading-none text-black">{sleep.h}</span>
+                  <span className="text-[24px] font-bold leading-none text-black">{sleep.h}</span>
                   <span className="text-[14px] text-black/50">h</span>
-                  <span className="text-[32px] font-bold leading-none text-black">{sleep.m}</span>
+                  <span className="text-[24px] font-bold leading-none text-black">{sleep.m}</span>
                   <span className="text-[14px] text-black/50">m</span>
                 </div>
                 <span className="mt-2 inline-flex items-center gap-1 rounded-[6px] bg-[#dcfce7] px-2 py-1 text-[12px] font-semibold text-[#008236]">
@@ -98,7 +98,7 @@ export default function ConnectivityHub() {
                 <img src={deviceCamera} alt="" className="size-8 rounded-full object-cover" />
                 <div className="text-left">
                   <p className="text-[12px] font-bold text-white">{cameras[0] ?? "Bedroom"}</p>
-                  <p className="text-[8px] text-white/50">Home CCTV</p>
+                  <p className="text-[11px] text-white/50">Home CCTV</p>
                 </div>
               </div>
               <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-[#1d4ed8]/80 px-3 py-1 text-[12px] font-bold text-white">

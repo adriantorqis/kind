@@ -140,7 +140,7 @@ export default function Assistant() {
             <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[#0b6b62] text-white">
               <Sparkles size={13} />
             </div>
-            <div className="rounded-[14px] rounded-tl-sm bg-white px-4 py-3 text-[13px] text-[#9e9e9e]">Thinking…</div>
+            <div className="rounded-[14px] rounded-tl-sm bg-white px-4 py-3 text-[14px] text-[#9e9e9e]">Thinking…</div>
           </div>
         )}
         {messages.length === 1 && (
@@ -149,7 +149,7 @@ export default function Assistant() {
               <button
                 key={s}
                 onClick={() => send(s)}
-                className="self-start rounded-[10px] border border-[#0b6b62]/25 bg-white px-3 py-2 text-[12.5px] text-[#0b6b62]"
+                className="self-start rounded-[10px] border border-[#0b6b62]/25 bg-white px-3 py-2 text-[12px] text-[#0b6b62]"
               >
                 {s}
               </button>

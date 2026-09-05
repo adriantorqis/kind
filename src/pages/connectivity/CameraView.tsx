@@ -54,7 +54,7 @@ export default function CameraView() {
       {flash && <div className="absolute inset-0 bg-white/80" />}
 
       <div className="relative z-10 flex h-[52px] items-center justify-between px-4">
-        <p className="text-[17px] font-semibold">13:13</p>
+        <p className="text-[16px] font-semibold">13:13</p>
       </div>
 
       <div className="relative z-10 flex items-center justify-center gap-1 px-6 pb-2 pt-1">
@@ -95,8 +95,8 @@ export default function CameraView() {
 
       <div className="relative z-10 flex items-center gap-2 px-6 pt-2">
         <span className="size-1.5 rounded-full bg-red-500" />
-        <span className="text-[10px] font-bold">LIVE</span>
-        <span className="text-[10px] text-white/60">· 10:24:30 AM</span>
+        <span className="text-[11px] font-bold">LIVE</span>
+        <span className="text-[11px] text-white/60">· 10:24:30 AM</span>
       </div>
       <p className="relative z-10 px-6 pt-1 text-[16px] font-bold">{currentRoom}</p>
 

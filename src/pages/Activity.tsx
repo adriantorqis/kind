@@ -30,7 +30,7 @@ export default function Activity() {
         <div className="rounded-[14px] bg-white p-4">
           <div className="mb-3 flex items-center justify-between">
             <p className="text-[20px] font-bold text-black">August 2026</p>
-            <p className="text-[13px] font-semibold text-[#1d4ed8]">
+            <p className="text-[14px] font-semibold text-[#1d4ed8]">
               {done}/{total} done
             </p>
           </div>

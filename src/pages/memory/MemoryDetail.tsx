@@ -17,7 +17,7 @@ export default function MemoryDetail() {
       <PhoneShell gradient="from-[#f4f5f7] to-[#f4f5f7]">
         <ScreenHeader title="Memory" onBack={() => navigate("/memory-book")} />
         <div className="flex flex-1 items-center justify-center px-10 text-center">
-          <p className="text-[15px] text-[#8a8f99]">This memory is no longer in the book.</p>
+          <p className="text-[16px] text-[#8a8f99]">This memory is no longer in the book.</p>
         </div>
         <HomeIndicator />
       </PhoneShell>
@@ -49,17 +49,17 @@ export default function MemoryDetail() {
           <div className="relative shrink-0">
             <img src={memory.photo} alt="" className="h-[240px] w-full object-cover" />
             <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/55 to-transparent" />
-            <p className="absolute bottom-3 left-6 text-[34px] font-bold leading-none tracking-[-0.02em] text-white tabular-nums">
+            <p className="absolute bottom-3 left-6 text-[24px] font-bold leading-none tracking-[-0.02em] text-white tabular-nums">
               {memory.year}
             </p>
           </div>
         )}
 
         <div className="px-6 pb-5 pt-4">
-          <h1 className="text-[23px] font-semibold leading-tight tracking-[-0.02em] text-[#14161a]">
+          <h1 className="text-[24px] font-semibold leading-tight tracking-[-0.02em] text-[#14161a]">
             {memory.title}
           </h1>
-          <p className="mt-1 text-[13px] text-[#8a8f99]">
+          <p className="mt-1 text-[14px] text-[#8a8f99]">
             {memory.decade} · {memory.type}
           </p>
 
@@ -89,7 +89,7 @@ export default function MemoryDetail() {
                     </span>
                     <span className="flex-1">
                       <span className="block text-[14px] font-semibold text-[#14161a]">{p.name}</span>
-                      <span className="block text-[12.5px] text-[#8a8f99]">{p.relationship}</span>
+                      <span className="block text-[12px] text-[#8a8f99]">{p.relationship}</span>
                     </span>
                   </button>
                 ))}
@@ -106,7 +106,7 @@ export default function MemoryDetail() {
                 <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#1d4ed8]">
                   Try saying to {first}
                 </p>
-                <p className="mt-1 text-[15px] italic leading-snug text-[#2b2f36]">"{memory.prompt}"</p>
+                <p className="mt-1 text-[16px] italic leading-snug text-[#2b2f36]">"{memory.prompt}"</p>
               </div>
             </div>
           </div>

@@ -31,7 +31,7 @@ export default function ArticleDetail() {
         <span className="flex items-center gap-1 text-[11px] font-semibold text-[#0b6b62]">
           <Clock size={11} /> {article.readMins} min read · {article.tag}
         </span>
-        <h1 className="mt-2 text-[22px] font-semibold leading-tight text-black">{article.title}</h1>
+        <h1 className="mt-2 text-[24px] font-semibold leading-tight text-black">{article.title}</h1>
         <p className="mt-2 text-[14px] text-[#818181]">{article.summary}</p>
 
         <div className="mt-4 flex flex-wrap gap-1.5">
@@ -44,18 +44,18 @@ export default function ArticleDetail() {
 
         <div className="mt-5 flex flex-col gap-4">
           {article.body.map((p, i) => (
-            <p key={i} className="text-[15px] leading-6 text-black">
+            <p key={i} className="text-[16px] leading-6 text-black">
               {p}
             </p>
           ))}
         </div>
 
         <div className="mt-8 rounded-[14px] bg-white p-4">
-          <p className="mb-3 text-[13px] font-semibold text-black">Was this helpful?</p>
+          <p className="mb-3 text-[14px] font-semibold text-black">Was this helpful?</p>
           <div className="flex gap-2">
             <button
               onClick={() => setHelpful(true)}
-              className={`flex flex-1 items-center justify-center gap-2 rounded-[10px] border py-2.5 text-[13px] font-medium ${
+              className={`flex flex-1 items-center justify-center gap-2 rounded-[10px] border py-2.5 text-[14px] font-medium ${
                 helpful === true ? "border-[#0b6b62] bg-[#d8ebe8] text-[#0b6b62]" : "border-[#e2e8f0] text-[#818181]"
               }`}
             >
@@ -63,7 +63,7 @@ export default function ArticleDetail() {
             </button>
             <button
               onClick={() => setHelpful(false)}
-              className={`flex-1 rounded-[10px] border py-2.5 text-[13px] font-medium ${
+              className={`flex-1 rounded-[10px] border py-2.5 text-[14px] font-medium ${
                 helpful === false ? "border-[#a3123f] bg-[#f7dde5] text-[#a3123f]" : "border-[#e2e8f0] text-[#818181]"
               }`}
             >

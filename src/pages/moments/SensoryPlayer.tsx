@@ -23,7 +23,7 @@ export default function SensoryPlayer() {
       <div className="relative flex h-full flex-col items-center justify-between overflow-hidden bg-gradient-to-b from-[#3a2a1a] to-[#1a1108] px-8 py-10 text-white">
         <button
           onClick={() => setNowPlaying(null)}
-          className="-ml-2 flex min-h-11 items-center self-start px-2 text-[13px] font-medium text-white/70"
+          className="-ml-2 flex min-h-11 items-center self-start px-2 text-[14px] font-medium text-white/70"
         >
           ← Choose another
         </button>
@@ -37,8 +37,8 @@ export default function SensoryPlayer() {
             </div>
           </div>
           <div className="text-center">
-            <p className="text-[19px] font-semibold">{nowPlaying.title}</p>
-            <p className="text-[13px] text-white/60">{nowPlaying.desc}</p>
+            <p className="text-[20px] font-semibold">{nowPlaying.title}</p>
+            <p className="text-[14px] text-white/60">{nowPlaying.desc}</p>
           </div>
           <button
             onClick={() => setPlaying((p) => !p)}
@@ -66,7 +66,7 @@ export default function SensoryPlayer() {
     <PhoneShell noScroll gradient="from-[#fff7ec] to-[#ffe9d6]">
       <ScreenHeader title="Calm & Sensory" transparent onBack={() => navigate("/moments")} />
       <div className="flex flex-1 flex-col gap-3 overflow-y-auto no-scrollbar px-6 py-4">
-        <p className="text-[13px] text-[#818181]">
+        <p className="text-[14px] text-[#818181]">
           Gentle, low-effort content — no interaction required, just something soothing to experience.
         </p>
         {TRACKS.map((t) => (
@@ -79,7 +79,7 @@ export default function SensoryPlayer() {
               <t.icon size={20} />
             </div>
             <div className="flex-1">
-              <p className="text-[15px] font-semibold text-black">{t.title}</p>
+              <p className="text-[16px] font-semibold text-black">{t.title}</p>
               <p className="text-[12px] text-[#818181]">{t.desc}</p>
             </div>
             <ChevronRight size={20} className="text-[#c4c4c4]" />
