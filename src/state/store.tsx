@@ -48,6 +48,13 @@ export type Memory = {
   peopleIds?: string[];
 };
 
+/** One snapshot in a person's photo box — a specific year, not just "a photo." */
+export type PersonPhoto = {
+  id: string;
+  year: number;
+  photo: string;
+};
+
 /**
  * Someone in the recipient's life. Distinct from FamilyMember: a Person may be
  * dead, estranged, or simply not an app user, but still central to the stories.
@@ -57,7 +64,13 @@ export type Person = {
   name: string;
   relationship: string;
   note?: string;
+  /** The face shown in compact places (chips, the book's cast list). */
   photo?: string;
+  /**
+   * Their photo box — snapshots across years. An old photo sometimes reads
+   * clearer than a recent one, so any of these can be promoted to `photo`.
+   */
+  photos?: PersonPhoto[];
   /** Set when this person is also in the care circle. */
   familyMemberId?: string;
 };
@@ -161,6 +174,9 @@ type Store = {
   addPerson: (p: Omit<Person, "id">) => string;
   updatePerson: (id: string, patch: Partial<Omit<Person, "id">>) => void;
   deletePerson: (id: string) => void;
+  addPersonPhoto: (personId: string, entry: Omit<PersonPhoto, "id">) => void;
+  removePersonPhoto: (personId: string, photoId: string) => void;
+  setPrimaryPhoto: (personId: string, photoId: string) => void;
 
   cameras: Room[];
   addCamera: (room: string) => void;
@@ -224,6 +240,8 @@ const seedPeople: Person[] = [
     name: "Siti Rahayu",
     relationship: "Wife",
     note: "Married in 1968, passed in 2019. Asking about their wedding day almost always lands well.",
+    photo: memWedding,
+    photos: [{ id: "pp-siti-1968", year: 1968, photo: memWedding }],
   },
   {
     id: "p-budi",
@@ -231,6 +249,8 @@ const seedPeople: Person[] = [
     relationship: "Son",
     note: "The eldest. Visits most weekends and shares the care schedule.",
     familyMemberId: "fam-budi",
+    photo: memFirstSteps,
+    photos: [{ id: "pp-budi-1970", year: 1970, photo: memFirstSteps }],
   },
   {
     id: "p-cici",
@@ -238,6 +258,8 @@ const seedPeople: Person[] = [
     relationship: "Granddaughter",
     note: "His first grandchild. Her name reliably brings a smile.",
     familyMemberId: "fam-cici",
+    photo: memGrandchild,
+    photos: [{ id: "pp-cici-1998", year: 1998, photo: memGrandchild }],
   },
 ];
 
@@ -485,7 +507,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   );
   const [activity, setActivity] = useState<ActivityItem[]>(() => load("kin.activity.v3", seedActivity));
   const [memories, setMemories] = useState<Memory[]>(() => load("kin.memories.v3", seedMemories));
-  const [people, setPeople] = useState<Person[]>(() => load("kin.people.v1", seedPeople));
+  const [people, setPeople] = useState<Person[]>(() => load("kin.people.v2", seedPeople));
   const [cameras, setCameras] = useState<Room[]>(() => load("kin.cameras", ["Bedroom", "Living Room"] as Room[]));
   const [engagementLog, setEngagementLog] = useState<EngagementLog[]>(() => load("kin.engagementLog", [] as EngagementLog[]));
   const [family, setFamily] = useState<FamilyMember[]>(() => load("kin.family", seedFamily));
@@ -499,7 +521,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   );
   useEffect(() => localStorage.setItem("kin.activity.v3", JSON.stringify(activity)), [activity]);
   useEffect(() => localStorage.setItem("kin.memories.v3", JSON.stringify(memories)), [memories]);
-  useEffect(() => localStorage.setItem("kin.people.v1", JSON.stringify(people)), [people]);
+  useEffect(() => localStorage.setItem("kin.people.v2", JSON.stringify(people)), [people]);
   useEffect(() => localStorage.setItem("kin.cameras", JSON.stringify(cameras)), [cameras]);
   useEffect(() => localStorage.setItem("kin.engagementLog", JSON.stringify(engagementLog)), [engagementLog]);
   useEffect(() => localStorage.setItem("kin.family", JSON.stringify(family)), [family]);
@@ -571,6 +593,28 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           return id;
         },
         updatePerson: (id, patch) => setPeople((prev) => prev.map((p) => (p.id === id ? { ...p, ...patch } : p))),
+        addPersonPhoto: (personId, entry) =>
+          setPeople((prev) =>
+            prev.map((p) =>
+              p.id === personId
+                ? { ...p, photos: [...(p.photos ?? []), { ...entry, id: crypto.randomUUID() }] }
+                : p,
+            ),
+          ),
+        removePersonPhoto: (personId, photoId) =>
+          setPeople((prev) =>
+            prev.map((p) =>
+              p.id === personId ? { ...p, photos: (p.photos ?? []).filter((ph) => ph.id !== photoId) } : p,
+            ),
+          ),
+        setPrimaryPhoto: (personId, photoId) =>
+          setPeople((prev) =>
+            prev.map((p) => {
+              if (p.id !== personId) return p;
+              const match = p.photos?.find((ph) => ph.id === photoId);
+              return match ? { ...p, photo: match.photo } : p;
+            }),
+          ),
         deletePerson: (id) => {
           setPeople((prev) => prev.filter((p) => p.id !== id));
           // Drop the tag from any memory that referenced them.
