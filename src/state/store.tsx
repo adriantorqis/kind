@@ -509,7 +509,27 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [memories, setMemories] = useState<Memory[]>(() => load("kin.memories.v3", seedMemories));
   const [people, setPeople] = useState<Person[]>(() => load("kin.people.v2", seedPeople));
   const [cameras, setCameras] = useState<Room[]>(() => load("kin.cameras", ["Bedroom", "Living Room"] as Room[]));
-  const [engagementLog, setEngagementLog] = useState<EngagementLog[]>(() => load("kin.engagementLog", [] as EngagementLog[]));
+  const [engagementLog, setEngagementLog] = useState<EngagementLog[]>(() =>
+    load("kin.engagementLog.v2", [
+      {
+        id: "eng-1",
+        recipientId: "bagus",
+        kind: "book",
+        title: "Life Memory Book",
+        at: new Date(Date.now() - 20 * 60 * 1000).toISOString(),
+        mood: "😊",
+        note: "Lit up talking about the wedding photo.",
+      },
+      {
+        id: "eng-2",
+        recipientId: "bagus",
+        kind: "game",
+        title: "Memory Match",
+        at: new Date(Date.now() - 26 * 60 * 60 * 1000).toISOString(),
+        mood: "😐",
+      },
+    ] as EngagementLog[]),
+  );
   const [family, setFamily] = useState<FamilyMember[]>(() => load("kin.family", seedFamily));
   const [symptomLogs, setSymptomLogs] = useState<SymptomLog[]>(() => load("kin.symptomLogs", [] as SymptomLog[]));
   const [consultations, setConsultations] = useState<Consultation[]>(() => load("kin.consultations", [] as Consultation[]));
@@ -523,7 +543,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => localStorage.setItem("kin.memories.v3", JSON.stringify(memories)), [memories]);
   useEffect(() => localStorage.setItem("kin.people.v2", JSON.stringify(people)), [people]);
   useEffect(() => localStorage.setItem("kin.cameras", JSON.stringify(cameras)), [cameras]);
-  useEffect(() => localStorage.setItem("kin.engagementLog", JSON.stringify(engagementLog)), [engagementLog]);
+  useEffect(() => localStorage.setItem("kin.engagementLog.v2", JSON.stringify(engagementLog)), [engagementLog]);
   useEffect(() => localStorage.setItem("kin.family", JSON.stringify(family)), [family]);
   useEffect(() => localStorage.setItem("kin.symptomLogs", JSON.stringify(symptomLogs)), [symptomLogs]);
   useEffect(() => localStorage.setItem("kin.consultations", JSON.stringify(consultations)), [consultations]);

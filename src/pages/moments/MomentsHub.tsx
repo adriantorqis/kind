@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { Sparkles, Puzzle, BookHeart, Waves, ChevronRight, Clock } from "lucide-react";
+import { Sparkles, Puzzle, BookHeart, Waves, Clock } from "lucide-react";
 import { PhoneShell, HomeIndicator } from "../../components/PhoneShell";
 import { BottomNav } from "../../components/BottomNav";
 import { useStore, type MomentKind } from "../../state/store";
 
-const TIERS: { kind: MomentKind; to: string; icon: typeof Puzzle; title: string; desc: string; forStage: string }[] = [
-  { kind: "game", to: "/moments/game", icon: Puzzle, title: "Memory Games", desc: "Matching & simple puzzles", forStage: "Early Stage" },
-  { kind: "book", to: "/memory-book", icon: BookHeart, title: "Life Memory Book", desc: "Reminiscence & photos", forStage: "Middle Stage" },
-  { kind: "sensory", to: "/moments/sensory", icon: Waves, title: "Calm & Sensory", desc: "Music, familiar photos", forStage: "Late Stage" },
+const TIERS: { kind: MomentKind; to: string; icon: typeof Puzzle; title: string; forStage: string }[] = [
+  { kind: "game", to: "/moments/game", icon: Puzzle, title: "Memory Games", forStage: "Early" },
+  { kind: "book", to: "/memory-book", icon: BookHeart, title: "Life Memory Book", forStage: "Middle" },
+  { kind: "sensory", to: "/moments/sensory", icon: Waves, title: "Calm & Sensory", forStage: "Late" },
 ];
 
 function timeAgo(iso: string) {
@@ -21,56 +21,49 @@ function timeAgo(iso: string) {
 export default function MomentsHub() {
   const navigate = useNavigate();
   const { selectedRecipient, recommendedMoment, engagementLog } = useStore();
-  const recommendedTier = TIERS.find((t) => t.kind === recommendedMoment.kind) ?? TIERS[1];
+
+  const recommended = TIERS.find((t) => t.kind === recommendedMoment.kind) ?? TIERS[1];
+  const others = TIERS.filter((t) => t.kind !== recommended.kind);
 
   return (
     <PhoneShell noScroll gradient="from-[#fff7ec] to-[#ffe9d6]">
       <div className="flex shrink-0 flex-col gap-1 px-6 pt-4">
-        <p className="text-[12px] font-semibold uppercase tracking-wide text-[#c2410c]">Kindred Moments</p>
+        <p className="text-[11px] font-semibold uppercase tracking-wide text-[#c2410c]">Kindred Moments</p>
         <h1 className="text-[24px] font-semibold text-black">
           Time with {selectedRecipient?.name.split(" ")[0] ?? "them"}
         </h1>
       </div>
 
-      <div className="flex flex-1 flex-col gap-4 overflow-y-auto no-scrollbar px-6 py-4">
+      <div className="flex flex-1 flex-col gap-3 overflow-y-auto no-scrollbar px-6 py-4">
+        {/* the bento: one hero cell for what fits today, two square cells for the rest */}
         <button
-          onClick={() => navigate(recommendedTier.to)}
-          className="flex items-center gap-3 rounded-[14px] border-2 border-[#f97316]/40 bg-white p-4 text-left"
+          onClick={() => navigate(recommended.to)}
+          className="relative flex aspect-[2/1] w-full flex-col justify-between overflow-hidden rounded-[18px] bg-[#c2410c] p-4 text-left"
         >
-          <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#fff0e0] text-[#c2410c]">
-            <Sparkles size={20} />
+          <Sparkles size={22} className="text-white/90" />
+          <div>
+            <p className="text-[16px] font-semibold leading-tight text-white">{recommended.title}</p>
+            <p className="text-[12px] text-white/70">{recommendedMoment.reason}</p>
           </div>
-          <div className="flex-1">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-[#c2410c]">Recommended today</p>
-            <p className="text-[16px] font-semibold text-black">{recommendedMoment.title}</p>
-            <p className="text-[12px] text-[#818181]">{recommendedMoment.reason}</p>
-          </div>
-          <ChevronRight size={20} className="text-[#c4c4c4]" />
         </button>
 
-        <div className="flex flex-col gap-3">
-          {TIERS.map((t) => (
+        <div className="grid grid-cols-2 gap-3">
+          {others.map((t) => (
             <button
               key={t.kind}
               onClick={() => navigate(t.to)}
-              className="flex items-center gap-3 rounded-[14px] bg-white p-4 text-left"
+              className="flex aspect-square flex-col justify-between rounded-[18px] bg-white p-4 text-left"
             >
-              <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#fff0e0] text-[#c2410c]">
-                <t.icon size={20} />
+              <div className="flex size-10 items-center justify-center rounded-full bg-[#fff0e0] text-[#c2410c]">
+                <t.icon size={18} />
               </div>
-              <div className="flex-1">
-                <p className="text-[16px] font-semibold text-black">{t.title}</p>
-                <p className="text-[12px] text-[#818181]">
-                  {t.desc} · usually {t.forStage.replace(" Stage", "")}
-                </p>
-              </div>
-              <ChevronRight size={20} className="text-[#c4c4c4]" />
+              <p className="text-[16px] font-semibold leading-tight text-black">{t.title}</p>
             </button>
           ))}
         </div>
 
         {engagementLog.length > 0 && (
-          <div className="flex flex-col gap-2">
+          <div className="mt-1 flex flex-col gap-2">
             <p className="text-[14px] font-semibold text-black">Recent sessions</p>
             {engagementLog.slice(0, 4).map((e) => (
               <div key={e.id} className="flex items-center gap-3 rounded-[14px] bg-white/70 p-3">
