@@ -38,7 +38,7 @@ export type Memory = {
   year: number;
   decade: string;
   title: string;
-  feeling: string;
+  feeling?: string;
   type: MemoryType;
   photo?: string;
   prompt?: string;

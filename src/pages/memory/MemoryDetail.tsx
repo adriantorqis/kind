@@ -60,7 +60,7 @@ export default function MemoryDetail() {
             {memory.title}
           </h1>
           <p className="mt-1 text-[13px] text-[#8a8f99]">
-            {memory.decade} · {memory.type} · {memory.feeling}
+            {memory.decade} · {memory.type}
           </p>
 
           {memory.story ? (

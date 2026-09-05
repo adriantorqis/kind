@@ -177,7 +177,7 @@ export default function MemoryBook() {
                         <div className="min-w-0 flex-1">
                           <p className="text-[14.5px] font-semibold leading-snug text-[#14161a]">{m.title}</p>
                           <p className="text-[12px] tabular-nums text-[#8a8f99]">
-                            {m.year} · {m.feeling} {m.type}
+                            {m.year} · {m.type}
                           </p>
                           {m.story && (
                             <p className="mt-1 line-clamp-2 text-[12.5px] leading-snug text-[#5c6069]">{m.story}</p>
