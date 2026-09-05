@@ -30,6 +30,26 @@ export type ActivityItem = {
   slot: MedSlot;
   done: boolean;
   assigneeId: string | null;
+  date: string;
+};
+
+export type MedForm = "Tablet" | "Capsule" | "Liquid" | "Injection" | "Cream";
+export type MealInstruction = "Before food" | "After food" | "With food" | "Anytime";
+
+export type Medication = {
+  id: string;
+  name: string;
+  dosageAmount: string;
+  dosageUnit: string;
+  form: MedForm;
+  amountPerDose: number;
+  timesPerDay: number;
+  times: string[];
+  mealInstruction: MealInstruction;
+  notes: string;
+  whatFor: string;
+  avoid: string;
+  sideEffects: string;
 };
 
 export type MemoryType = "Milestone" | "Moment" | "Place" | "Person";
@@ -167,6 +187,11 @@ type Store = {
   assignActivity: (id: string, assigneeId: string | null) => void;
   addActivity: (a: Omit<ActivityItem, "id" | "done">) => void;
 
+  medications: Medication[];
+  addMedication: (m: Omit<Medication, "id">) => string;
+  updateMedication: (id: string, patch: Partial<Omit<Medication, "id">>) => void;
+  deleteMedication: (id: string) => void;
+
   memories: Memory[];
   addMemory: (m: Omit<Memory, "id" | "decade">) => string;
   updateMemory: (id: string, patch: Partial<Omit<Memory, "id">>) => void;
@@ -225,13 +250,82 @@ const seedRecipients: Recipient[] = [
 ];
 
 const seedActivity: ActivityItem[] = [
-  { id: "a1", title: "Panadol", time: "08:00", slot: "Morning", done: true, assigneeId: "fam-you" },
-  { id: "a2", title: "Blood pressure check", time: "09:00", slot: "Morning", done: true, assigneeId: "fam-you" },
-  { id: "a3", title: "Panadol", time: "13:00", slot: "Afternoon", done: false, assigneeId: "fam-budi" },
-  { id: "a4", title: "Blood pressure check", time: "15:00", slot: "Afternoon", done: false, assigneeId: null },
-  { id: "a5", title: "Walk in the garden", time: "17:00", slot: "Evening", done: false, assigneeId: "fam-you" },
-  { id: "a6", title: "Dinner and evening wash", time: "18:30", slot: "Evening", done: false, assigneeId: "fam-budi" },
-  { id: "a7", title: "Aricept (Donepezil)", time: "21:00", slot: "Night", done: false, assigneeId: "fam-you" },
+  { id: "a1", title: "Panadol", time: "08:00", slot: "Morning", done: true, assigneeId: "fam-you", date: "2026-08-06" },
+  { id: "a2", title: "Blood pressure check", time: "09:00", slot: "Morning", done: true, assigneeId: "fam-you", date: "2026-08-06" },
+  { id: "a3", title: "Panadol", time: "13:00", slot: "Afternoon", done: false, assigneeId: "fam-budi", date: "2026-08-06" },
+  { id: "a4", title: "Blood pressure check", time: "15:00", slot: "Afternoon", done: false, assigneeId: null, date: "2026-08-06" },
+  { id: "a5", title: "Walk in the garden", time: "17:00", slot: "Evening", done: false, assigneeId: "fam-you", date: "2026-08-06" },
+  { id: "a6", title: "Dinner and evening wash", time: "18:30", slot: "Evening", done: false, assigneeId: "fam-budi", date: "2026-08-06" },
+  { id: "a7", title: "Aricept (Donepezil)", time: "21:00", slot: "Night", done: false, assigneeId: "fam-you", date: "2026-08-06" },
+  { id: "a8", title: "Panadol", time: "08:00", slot: "Morning", done: true, assigneeId: "fam-you", date: "2026-08-05" },
+  { id: "a9", title: "Medical Checkup", time: "13:00", slot: "Afternoon", done: true, assigneeId: "fam-you", date: "2026-08-05" },
+  { id: "a10", title: "Panadol", time: "08:00", slot: "Morning", done: false, assigneeId: "fam-you", date: "2026-08-07" },
+  { id: "a11", title: "Blood pressure check", time: "09:00", slot: "Morning", done: false, assigneeId: null, date: "2026-08-07" },
+];
+
+const seedMedications: Medication[] = [
+  {
+    id: "med-simvastatin",
+    name: "Simvastatin",
+    dosageAmount: "20",
+    dosageUnit: "mg",
+    form: "Tablet",
+    amountPerDose: 1,
+    timesPerDay: 1,
+    times: ["20:00"],
+    mealInstruction: "Anytime",
+    notes: "eat 1x a day in the evening",
+    whatFor:
+      "It lowers LDL (\"bad\" cholesterol), total cholesterol, and triglycerides, and can increase HDL (\"good\" cholesterol). It's also used to reduce the risk of cardiovascular problems such as heart attack and stroke in appropriate patients.",
+    avoid: "Grapefruit / grapefruit juice",
+    sideEffects:
+      "If severe or unusual muscle symptoms develop, contact a doctor promptly. Other possible side effects include headache, dizziness, nausea, digestive problems, and muscle aches.",
+  },
+  {
+    id: "med-amoxicillin",
+    name: "Amoxicillin",
+    dosageAmount: "500",
+    dosageUnit: "mg",
+    form: "Capsule",
+    amountPerDose: 1,
+    timesPerDay: 3,
+    times: ["08:00", "14:00", "20:00"],
+    mealInstruction: "With food",
+    notes: "eat 3x a day, evenly spaced",
+    whatFor: "Amoxicillin is an antibiotic that treats bacterial infections by stopping bacteria from building their cell walls.",
+    avoid: "Skipping doses or stopping early, even if symptoms improve",
+    sideEffects: "Finish the full course. Contact a doctor if a rash, severe diarrhea, or breathing difficulty develops.",
+  },
+  {
+    id: "med-losartan",
+    name: "Losartan",
+    dosageAmount: "50",
+    dosageUnit: "mg",
+    form: "Tablet",
+    amountPerDose: 1,
+    timesPerDay: 1,
+    times: ["08:00"],
+    mealInstruction: "Anytime",
+    notes: "eat 1x a day, same time each day",
+    whatFor: "Losartan relaxes blood vessels, lowering blood pressure and reducing strain on the heart and kidneys.",
+    avoid: "Potassium supplements or salt substitutes, unless a doctor approves",
+    sideEffects: "May cause dizziness, especially when standing up quickly. Contact a doctor for swelling of the face or throat.",
+  },
+  {
+    id: "med-omeprazole",
+    name: "Omeprazole",
+    dosageAmount: "20",
+    dosageUnit: "mg",
+    form: "Capsule",
+    amountPerDose: 1,
+    timesPerDay: 1,
+    times: ["07:00"],
+    mealInstruction: "Before food",
+    notes: "eat 1x a day in the morning, 30-60 minutes before eating",
+    whatFor: "Omeprazole reduces the amount of acid made in the stomach, easing heartburn and helping ulcers heal.",
+    avoid: "Long-term daily use without periodic review by a doctor",
+    sideEffects: "May cause headache or stomach upset. Contact a doctor for severe or persistent diarrhea.",
+  },
 ];
 
 function decadeOf(year: number) {
@@ -651,7 +745,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [selectedRecipientId, setSelectedRecipientId] = useState<string | null>(() =>
     load("kin.selectedRecipientId", "bagus" as string | null),
   );
-  const [activity, setActivity] = useState<ActivityItem[]>(() => load("kin.activity.v3", seedActivity));
+  const [activity, setActivity] = useState<ActivityItem[]>(() => load("kin.activity.v4", seedActivity));
+  const [medications, setMedications] = useState<Medication[]>(() => load("kin.medications", seedMedications));
   const [memories, setMemories] = useState<Memory[]>(() => load("kin.memories.v3", seedMemories));
   const [people, setPeople] = useState<Person[]>(() => load("kin.people.v2", seedPeople));
   const [cameras, setCameras] = useState<Room[]>(() => load("kin.cameras", ["Bedroom", "Living Room"] as Room[]));
@@ -686,7 +781,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     () => localStorage.setItem("kin.selectedRecipientId", JSON.stringify(selectedRecipientId)),
     [selectedRecipientId],
   );
-  useEffect(() => localStorage.setItem("kin.activity.v3", JSON.stringify(activity)), [activity]);
+  useEffect(() => localStorage.setItem("kin.activity.v4", JSON.stringify(activity)), [activity]);
+  useEffect(() => localStorage.setItem("kin.medications", JSON.stringify(medications)), [medications]);
   useEffect(() => localStorage.setItem("kin.memories.v3", JSON.stringify(memories)), [memories]);
   useEffect(() => localStorage.setItem("kin.people.v2", JSON.stringify(people)), [people]);
   useEffect(() => localStorage.setItem("kin.cameras", JSON.stringify(cameras)), [cameras]);
@@ -739,6 +835,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         assignActivity: (id, assigneeId) =>
           setActivity((prev) => prev.map((a) => (a.id === id ? { ...a, assigneeId } : a))),
         addActivity: (a) => setActivity((prev) => [...prev, { ...a, id: crypto.randomUUID(), done: false }]),
+
+        medications,
+        addMedication: (m) => {
+          const id = crypto.randomUUID();
+          setMedications((prev) => [...prev, { ...m, id }]);
+          return id;
+        },
+        updateMedication: (id, patch) =>
+          setMedications((prev) => prev.map((m) => (m.id === id ? { ...m, ...patch } : m))),
+        deleteMedication: (id) => setMedications((prev) => prev.filter((m) => m.id !== id)),
 
         memories: [...memories].sort((a, b) => a.year - b.year),
         addMemory: (m) => {
@@ -839,7 +945,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         },
       };
     },
-    [recipients, selectedRecipientId, activity, memories, people, cameras, engagementLog, family, symptomLogs, consultations, completedLearnIds],
+    [recipients, selectedRecipientId, activity, medications, memories, people, cameras, engagementLog, family, symptomLogs, consultations, completedLearnIds],
   );
 
   return <StoreCtx.Provider value={value}>{children}</StoreCtx.Provider>;

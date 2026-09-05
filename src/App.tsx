@@ -10,6 +10,10 @@ import RecipientSelect from "./pages/RecipientSelect";
 import RecipientForm from "./pages/RecipientForm";
 import Home from "./pages/Home";
 import Activity from "./pages/Activity";
+import CalendarPage from "./pages/Calendar";
+import MedicationList from "./pages/medication/MedicationList";
+import MedicationDetail from "./pages/medication/MedicationDetail";
+import MedicationForm from "./pages/medication/MedicationForm";
 import ConnectivityHub from "./pages/connectivity/ConnectivityHub";
 import CameraView from "./pages/connectivity/CameraView";
 import AddCamera from "./pages/connectivity/AddCamera";
@@ -53,6 +57,11 @@ export default function App() {
 
             <Route path="/home" element={<Home />} />
             <Route path="/activity" element={<Activity />} />
+            <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/medication" element={<MedicationList />} />
+            <Route path="/medication/new" element={<MedicationForm />} />
+            <Route path="/medication/:id" element={<MedicationDetail />} />
+            <Route path="/medication/:id/edit" element={<MedicationForm />} />
             <Route path="/ai-summary" element={<AiSummary />} />
 
             {/* K — Kindred Moments */}
