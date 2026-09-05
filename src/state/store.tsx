@@ -42,6 +42,24 @@ export type Memory = {
   type: MemoryType;
   photo?: string;
   prompt?: string;
+  /** The narrative itself — what a life story book is actually for. */
+  story?: string;
+  /** Who appears in this memory, as Person ids. */
+  peopleIds?: string[];
+};
+
+/**
+ * Someone in the recipient's life. Distinct from FamilyMember: a Person may be
+ * dead, estranged, or simply not an app user, but still central to the stories.
+ */
+export type Person = {
+  id: string;
+  name: string;
+  relationship: string;
+  note?: string;
+  photo?: string;
+  /** Set when this person is also in the care circle. */
+  familyMemberId?: string;
 };
 
 export type Room = "Bedroom" | "Living Room";
@@ -135,7 +153,14 @@ type Store = {
   addActivity: (a: Omit<ActivityItem, "id" | "done">) => void;
 
   memories: Memory[];
-  addMemory: (m: Omit<Memory, "id" | "decade">) => void;
+  addMemory: (m: Omit<Memory, "id" | "decade">) => string;
+  updateMemory: (id: string, patch: Partial<Omit<Memory, "id">>) => void;
+  deleteMemory: (id: string) => void;
+
+  people: Person[];
+  addPerson: (p: Omit<Person, "id">) => string;
+  updatePerson: (id: string, patch: Partial<Omit<Person, "id">>) => void;
+  deletePerson: (id: string) => void;
 
   cameras: Room[];
   addCamera: (room: string) => void;
@@ -193,15 +218,86 @@ function decadeOf(year: number) {
   return `${Math.floor(year / 10) * 10}s`;
 }
 
+const seedPeople: Person[] = [
+  {
+    id: "p-siti",
+    name: "Siti Rahayu",
+    relationship: "Wife",
+    note: "Married in 1968, passed in 2019. Asking about their wedding day almost always lands well.",
+  },
+  {
+    id: "p-budi",
+    name: "Budi Gunawan",
+    relationship: "Son",
+    note: "The eldest. Visits most weekends and shares the care schedule.",
+    familyMemberId: "fam-budi",
+  },
+  {
+    id: "p-cici",
+    name: "Cici",
+    relationship: "Granddaughter",
+    note: "His first grandchild. Her name reliably brings a smile.",
+    familyMemberId: "fam-cici",
+  },
+];
+
 const seedMemories: Memory[] = [
-  { id: "m1", year: 1944, decade: "1940s", title: "Born in Surabaya", feeling: "🌅", type: "Milestone", photo: memBorn, prompt: "Dad, tell me about Surabaya when you were a boy. What did your street look like?" },
-  { id: "m2", year: 1962, decade: "1960s", title: "Graduated from SMAN 1 Surabaya", feeling: "🌟", type: "Milestone", photo: memGraduated, prompt: "Who did you sit next to at school? Were you a good student, or a troublemaker?" },
-  { id: "m3", year: 1968, decade: "1960s", title: "Wedding with Siti Rahayu", feeling: "😊", type: "Moment", photo: memWedding, prompt: "What do you remember about the day you married Ibu? What was she wearing?" },
-  { id: "m4", year: 1970, decade: "1970s", title: "Budi's First Steps", feeling: "😊", type: "Milestone", photo: memFirstSteps, prompt: "Do you remember Budi learning to walk? Was he a brave one or a careful one?" },
-  { id: "m5", year: 1975, decade: "1970s", title: "A New Life in Jakarta", feeling: "🌅", type: "Milestone", photo: memJakarta, prompt: "What surprised you most about Jakarta when you first arrived?" },
-  { id: "m6", year: 1985, decade: "1980s", title: "The Family Home in Pondok Indah", feeling: "🌟", type: "Place", photo: memFamilyHome, prompt: "Which room in the old house was your favourite, and why that one?" },
-  { id: "m7", year: 1998, decade: "1990s", title: "Cici — His First Grandchild", feeling: "😊", type: "Moment", photo: memGrandchild, prompt: "Do you remember the first time you held Cici? What did you think?" },
-  { id: "m8", year: 2010, decade: "2010s", title: "Retirement from PT Maju Bersama", feeling: "🍂", type: "Milestone", photo: memRetirement, prompt: "What did you miss most about work after you retired? And what didn't you miss at all?" },
+  {
+    id: "m1", year: 1944, decade: "1940s", title: "Born in Surabaya", feeling: "🌅", type: "Milestone", photo: memBorn,
+    story:
+      "Bagus was born in a small house on Jalan Kedungdoro, the third of five children. His father repaired bicycles in the front room, and the whole street knew the sound of his tools.",
+    prompt: "Dad, tell me about Surabaya when you were a boy. What did your street look like?",
+    peopleIds: [],
+  },
+  {
+    id: "m2", year: 1962, decade: "1960s", title: "Graduated from SMAN 1 Surabaya", feeling: "🌟", type: "Milestone", photo: memGraduated,
+    story:
+      "He finished at SMAN 1 with a certificate his mother framed and kept on the wall for the rest of her life. He has told the story of the headmaster mispronouncing his name at the ceremony more times than anyone can count.",
+    prompt: "Who did you sit next to at school? Were you a good student, or a troublemaker?",
+    peopleIds: [],
+  },
+  {
+    id: "m3", year: 1968, decade: "1960s", title: "Wedding with Siti Rahayu", feeling: "😊", type: "Moment", photo: memWedding,
+    story:
+      "They married in the rainy season, and the ceremony ran two hours late because the rain would not stop. Siti wore her mother's kebaya. Bagus still says he could not hear a word the penghulu said over the noise on the roof.",
+    prompt: "What do you remember about the day you married Ibu? What was she wearing?",
+    peopleIds: ["p-siti"],
+  },
+  {
+    id: "m4", year: 1970, decade: "1970s", title: "Budi's First Steps", feeling: "😊", type: "Milestone", photo: memFirstSteps,
+    story:
+      "Budi walked at eleven months, straight from the doorway to his father's knees, and Bagus swears he had been practising in secret. It is one of the few days he still recalls without prompting.",
+    prompt: "Do you remember Budi learning to walk? Was he a brave one or a careful one?",
+    peopleIds: ["p-budi", "p-siti"],
+  },
+  {
+    id: "m5", year: 1975, decade: "1970s", title: "A New Life in Jakarta", feeling: "🌅", type: "Milestone", photo: memJakarta,
+    story:
+      "The family moved to Jakarta for work, six of them in two rooms in Tanah Abang. Bagus took the first bus at five each morning. He says the city smelled of clove smoke and wet asphalt.",
+    prompt: "What surprised you most about Jakarta when you first arrived?",
+    peopleIds: ["p-siti", "p-budi"],
+  },
+  {
+    id: "m6", year: 1985, decade: "1980s", title: "The Family Home in Pondok Indah", feeling: "🌟", type: "Place", photo: memFamilyHome,
+    story:
+      "After eleven years of saving they bought the house in Pondok Indah, with the mango tree in the back that Bagus planted himself. Every grandchild has been photographed under it.",
+    prompt: "Which room in the old house was your favourite, and why that one?",
+    peopleIds: ["p-siti"],
+  },
+  {
+    id: "m7", year: 1998, decade: "1990s", title: "Cici — His First Grandchild", feeling: "😊", type: "Moment", photo: memGrandchild,
+    story:
+      "Cici was born on a Tuesday in the hot season, and Bagus took two days off work, which he had never done before. He held her before anyone else outside the delivery room.",
+    prompt: "Do you remember the first time you held Cici? What did you think?",
+    peopleIds: ["p-cici", "p-budi"],
+  },
+  {
+    id: "m8", year: 2010, decade: "2010s", title: "Retirement from PT Maju Bersama", feeling: "🍂", type: "Milestone", photo: memRetirement,
+    story:
+      "Forty-one years at PT Maju Bersama, ending with a small ceremony and a wall clock he still keeps by the door. He was not sure what to do with himself for the first year.",
+    prompt: "What did you miss most about work after you retired? And what didn't you miss at all?",
+    peopleIds: [],
+  },
 ];
 
 const seedArticles: Article[] = [
@@ -388,7 +484,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     load("kin.selectedRecipientId", "bagus" as string | null),
   );
   const [activity, setActivity] = useState<ActivityItem[]>(() => load("kin.activity.v3", seedActivity));
-  const [memories, setMemories] = useState<Memory[]>(() => load("kin.memories.v2", seedMemories));
+  const [memories, setMemories] = useState<Memory[]>(() => load("kin.memories.v3", seedMemories));
+  const [people, setPeople] = useState<Person[]>(() => load("kin.people.v1", seedPeople));
   const [cameras, setCameras] = useState<Room[]>(() => load("kin.cameras", ["Bedroom", "Living Room"] as Room[]));
   const [engagementLog, setEngagementLog] = useState<EngagementLog[]>(() => load("kin.engagementLog", [] as EngagementLog[]));
   const [family, setFamily] = useState<FamilyMember[]>(() => load("kin.family", seedFamily));
@@ -401,7 +498,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     [selectedRecipientId],
   );
   useEffect(() => localStorage.setItem("kin.activity.v3", JSON.stringify(activity)), [activity]);
-  useEffect(() => localStorage.setItem("kin.memories.v2", JSON.stringify(memories)), [memories]);
+  useEffect(() => localStorage.setItem("kin.memories.v3", JSON.stringify(memories)), [memories]);
+  useEffect(() => localStorage.setItem("kin.people.v1", JSON.stringify(people)), [people]);
   useEffect(() => localStorage.setItem("kin.cameras", JSON.stringify(cameras)), [cameras]);
   useEffect(() => localStorage.setItem("kin.engagementLog", JSON.stringify(engagementLog)), [engagementLog]);
   useEffect(() => localStorage.setItem("kin.family", JSON.stringify(family)), [family]);
@@ -453,7 +551,33 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         addActivity: (a) => setActivity((prev) => [...prev, { ...a, id: crypto.randomUUID(), done: false }]),
 
         memories: [...memories].sort((a, b) => a.year - b.year),
-        addMemory: (m) => setMemories((prev) => [...prev, { ...m, id: crypto.randomUUID(), decade: decadeOf(m.year) }]),
+        addMemory: (m) => {
+          const id = crypto.randomUUID();
+          setMemories((prev) => [...prev, { ...m, id, decade: decadeOf(m.year) }]);
+          return id;
+        },
+        updateMemory: (id, patch) =>
+          setMemories((prev) =>
+            prev.map((m) =>
+              m.id === id ? { ...m, ...patch, decade: patch.year ? decadeOf(patch.year) : m.decade } : m,
+            ),
+          ),
+        deleteMemory: (id) => setMemories((prev) => prev.filter((m) => m.id !== id)),
+
+        people,
+        addPerson: (p) => {
+          const id = crypto.randomUUID();
+          setPeople((prev) => [...prev, { ...p, id }]);
+          return id;
+        },
+        updatePerson: (id, patch) => setPeople((prev) => prev.map((p) => (p.id === id ? { ...p, ...patch } : p))),
+        deletePerson: (id) => {
+          setPeople((prev) => prev.filter((p) => p.id !== id));
+          // Drop the tag from any memory that referenced them.
+          setMemories((prev) =>
+            prev.map((m) => (m.peopleIds?.includes(id) ? { ...m, peopleIds: m.peopleIds.filter((x) => x !== id) } : m)),
+          );
+        },
 
         cameras,
         addCamera: (room) => setCameras((prev) => (prev.includes(room as Room) ? prev : [...prev, room as Room])),
@@ -500,7 +624,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         },
       };
     },
-    [recipients, selectedRecipientId, activity, memories, cameras, engagementLog, family, symptomLogs, consultations],
+    [recipients, selectedRecipientId, activity, memories, people, cameras, engagementLog, family, symptomLogs, consultations],
   );
 
   return <StoreCtx.Provider value={value}>{children}</StoreCtx.Provider>;

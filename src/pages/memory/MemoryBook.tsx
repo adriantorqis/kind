@@ -1,31 +1,44 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, MessageCircle, UserRound, Smile } from "lucide-react";
+import { Plus, Search, BookOpen, X } from "lucide-react";
 import { PhoneShell, HomeIndicator } from "../../components/PhoneShell";
 import { ScreenHeader } from "../../components/ScreenHeader";
 import { useStore } from "../../state/store";
 
-type Tab = "Timeline" | "People";
-
-const KEY_PEOPLE = [
-  { name: "Siti Rahayu", relation: "Wife", note: "Married in 1968. Loves being asked about their wedding day." },
-  { name: "Budi", relation: "Son", note: "Took his first steps in 1970. Visits on weekends." },
-  { name: "Cici", relation: "First Grandchild", note: "Born in 1998 — a favorite topic that always brings a smile." },
-];
-
 export default function MemoryBook() {
   const navigate = useNavigate();
-  const { memories } = useStore();
-  const [tab, setTab] = useState<Tab>("Timeline");
+  const { memories, people, selectedRecipient } = useStore();
+  const [q, setQ] = useState("");
 
-  const memoryOfDay = memories[0];
-  const grouped = memories.reduce<Record<string, typeof memories>>((acc, m) => {
+  const first = selectedRecipient?.name.split(" ")[0] ?? "them";
+  const query = q.trim().toLowerCase();
+
+  const results = useMemo(() => {
+    if (!query) return memories;
+    return memories.filter((m) => {
+      const cast = (m.peopleIds ?? [])
+        .map((id) => people.find((p) => p.id === id)?.name ?? "")
+        .join(" ");
+      return [m.title, m.story ?? "", String(m.year), m.decade, m.type, cast]
+        .join(" ")
+        .toLowerCase()
+        .includes(query);
+    });
+  }, [memories, people, query]);
+
+  const grouped = results.reduce<Record<string, typeof memories>>((acc, m) => {
     (acc[m.decade] ??= []).push(m);
     return acc;
   }, {});
 
+  const cover = memories.filter((m) => m.photo).slice(0, 3);
+  const span =
+    memories.length > 0
+      ? `${memories[0].year} – ${memories[memories.length - 1].year}`
+      : "";
+
   return (
-    <PhoneShell noScroll gradient="from-[#f0f4ff] to-[#e8f0fe]">
+    <PhoneShell noScroll gradient="from-[#f4f5f7] to-[#f4f5f7]">
       <ScreenHeader
         title="Life Memory Book"
         onBack={() => navigate("/moments")}
@@ -39,97 +52,145 @@ export default function MemoryBook() {
           </button>
         }
       />
-      <div className="flex gap-6 border-b border-[#f0f0f0] bg-white px-6">
-        {(["Timeline", "People"] as Tab[]).map((t) => (
+
+      <div className="flex flex-1 flex-col overflow-y-auto no-scrollbar">
+        {/* the book itself, as an object you open */}
+        <div className="px-6 pb-5 pt-1">
           <button
-            key={t}
-            onClick={() => setTab(t)}
-            className={`border-b-2 py-3 text-[14px] font-semibold ${
-              tab === t ? "border-[#1d4ed8] text-[#1d4ed8]" : "border-transparent text-[#9e9e9e]"
-            }`}
+            onClick={() => navigate("/memory-book/story")}
+            disabled={memories.length === 0}
+            className="flex w-full items-center gap-4 rounded-[14px] bg-white p-3.5 text-left disabled:opacity-50"
           >
-            {t === "Timeline" ? `Life Timeline (${memories.length})` : "Key People"}
-          </button>
-        ))}
-      </div>
-
-      <div className="flex flex-1 flex-col overflow-y-auto no-scrollbar px-6 py-4">
-        {tab === "Timeline" ? (
-          <>
-            <p className="mb-3 text-[13px] italic text-[#818181]">Bagus's life, in their own story</p>
-
-            {memoryOfDay && (
-              <div className="mb-5 shrink-0 rounded-[14px] bg-white shadow-sm">
-                <p className="px-4 pt-3 text-[11px] font-semibold uppercase tracking-wide text-[#1d4ed8]">
-                  Memory of the Day
-                </p>
-                <div className="flex gap-3 p-4 pt-2">
-                  {memoryOfDay.photo && (
-                    <img src={memoryOfDay.photo} alt="" className="size-16 rounded-[10px] object-cover" />
-                  )}
-                  <div>
-                    <p className="text-[14px] font-semibold text-black">{memoryOfDay.title}</p>
-                    <p className="text-[12px] text-[#818181]">
-                      {memoryOfDay.year} · {memoryOfDay.feeling} nostalgic
-                    </p>
-                  </div>
-                </div>
-                {memoryOfDay.prompt && (
-                  <div className="mx-4 mb-4 flex gap-2 rounded-[10px] bg-[#f0f4ff] p-3">
-                    <MessageCircle size={16} className="mt-0.5 shrink-0 text-[#1d4ed8]" />
-                    <p className="text-[12px] leading-4 text-black">
-                      <span className="font-semibold">Try saying to Bagus…</span> "{memoryOfDay.prompt}"
-                    </p>
-                  </div>
-                )}
-              </div>
-            )}
-
-            <div className="flex flex-col gap-6">
-              {Object.entries(grouped).map(([decade, items]) => (
-                <div key={decade}>
-                  <p className="mb-2 text-[13px] font-bold text-[#1d4ed8]">{decade}</p>
-                  <div className="flex flex-col gap-2">
-                    {items.map((m) => (
-                      <div key={m.id} className="flex items-center gap-3 rounded-[14px] bg-white p-3">
-                        {m.photo && <img src={m.photo} alt="" className="size-14 rounded-[10px] object-cover" />}
-                        <div className="flex-1">
-                          <p className="text-[14px] font-semibold text-black">{m.title}</p>
-                          <p className="text-[12px] text-[#818181]">
-                            {m.year} · {m.feeling} · {m.type}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+            <div className="flex shrink-0 -space-x-4">
+              {cover.map((m, idx) => (
+                <img
+                  key={m.id}
+                  src={m.photo}
+                  alt=""
+                  className="size-[54px] rounded-[10px] border-2 border-white object-cover"
+                  style={{ zIndex: cover.length - idx }}
+                />
               ))}
             </div>
+            <div className="flex-1">
+              <p className="text-[16px] font-semibold leading-tight text-[#14161a]">
+                Read {first}'s book together
+              </p>
+              <p className="mt-0.5 text-[12.5px] text-[#8a8f99]">
+                {memories.length} {memories.length === 1 ? "memory" : "memories"}
+                {span && ` · ${span}`}
+              </p>
+            </div>
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#1d4ed8] text-white">
+              <BookOpen size={18} />
+            </span>
+          </button>
+        </div>
 
+        {/* people: the book's cast, and a way into a themed reading */}
+        <div className="border-y border-[#e6e8ec] bg-white py-4">
+          <div className="flex items-baseline justify-between px-6 pb-3">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.09em] text-[#8a8f99]">
+              The people in it
+            </h2>
+          </div>
+          <div className="flex gap-4 overflow-x-auto no-scrollbar px-6">
+            {people.map((p) => {
+              const count = memories.filter((m) => m.peopleIds?.includes(p.id)).length;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => navigate(`/memory-book/people/${p.id}`)}
+                  className="flex w-[68px] shrink-0 flex-col items-center gap-1.5"
+                >
+                  {p.photo ? (
+                    <img src={p.photo} alt="" className="size-14 rounded-full object-cover" />
+                  ) : (
+                    <span className="flex size-14 items-center justify-center rounded-full bg-[#eef2ff] text-[19px] font-semibold text-[#1d4ed8]">
+                      {p.name[0]}
+                    </span>
+                  )}
+                  <span className="w-full truncate text-center text-[12px] font-medium text-[#14161a]">
+                    {p.name.split(" ")[0]}
+                  </span>
+                  <span className="text-[11px] text-[#8a8f99]">{count}</span>
+                </button>
+              );
+            })}
             <button
-              onClick={() => navigate("/moments/log", { state: { kind: "book", title: "Life Memory Book" } })}
-              className="mt-6 flex items-center justify-center gap-2 rounded-[14px] border-2 border-dashed border-[#1d4ed8]/40 py-4 text-[14px] font-semibold text-[#1d4ed8]"
+              onClick={() => navigate("/memory-book/people/new")}
+              className="flex w-[68px] shrink-0 flex-col items-center gap-1.5"
             >
-              <Smile size={18} /> Log today's session
+              <span className="flex size-14 items-center justify-center rounded-full border border-dashed border-[#b9c0cc] text-[#8a8f99]">
+                <Plus size={20} />
+              </span>
+              <span className="text-center text-[12px] font-medium text-[#8a8f99]">Add</span>
             </button>
-          </>
-        ) : (
-          <div className="flex flex-col gap-3">
-            {KEY_PEOPLE.map((p) => (
-              <div key={p.name} className="flex items-start gap-3 rounded-[14px] bg-white p-4">
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#dbeafe] text-[#1d4ed8]">
-                  <UserRound size={22} />
-                </div>
-                <div>
-                  <p className="text-[14px] font-semibold text-black">
-                    {p.name} <span className="font-normal text-[#818181]">· {p.relation}</span>
-                  </p>
-                  <p className="mt-1 text-[13px] text-[#818181]">{p.note}</p>
+          </div>
+        </div>
+
+        {/* search */}
+        <div className="px-6 pb-1 pt-4">
+          {/* a label so the whole padded row is the tap target, not just the text box */}
+          <label className="flex items-center gap-2 rounded-[11px] bg-white px-3.5">
+            <Search size={16} className="shrink-0 text-[#8a8f99]" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search a year, a place, a name…"
+              className="min-w-0 flex-1 bg-transparent py-3 text-[14.5px] text-[#14161a] outline-none placeholder:text-[#a6abb4]"
+            />
+            {q && (
+              <button
+                type="button"
+                onClick={() => setQ("")}
+                aria-label="Clear search"
+                className="-mr-2 flex size-11 shrink-0 items-center justify-center text-[#8a8f99]"
+              >
+                <X size={16} />
+              </button>
+            )}
+          </label>
+        </div>
+
+        {/* the timeline, on a real spine */}
+        <div className="px-6 pb-6 pt-4">
+          {results.length === 0 ? (
+            <p className="rounded-[12px] border border-dashed border-[#c3c8d2] px-4 py-8 text-center text-[14px] text-[#8a8f99]">
+              Nothing in the book matches "{q}".
+            </p>
+          ) : (
+            Object.entries(grouped).map(([decade, items]) => (
+              <div key={decade}>
+                <p className="pb-2 pt-1 text-[13px] font-bold tabular-nums text-[#1d4ed8]">{decade}</p>
+                <div className="relative border-l border-[#dbe0e8] pl-5">
+                  {items.map((m) => (
+                    <div key={m.id} className="relative pb-3">
+                      <span className="absolute -left-[23px] top-[26px] size-[7px] rounded-full bg-[#1d4ed8] ring-4 ring-[#f4f5f7]" />
+                      <button
+                        onClick={() => navigate(`/memory-book/${m.id}`)}
+                        className="flex w-full gap-3 rounded-[12px] bg-white p-3 text-left"
+                      >
+                        {m.photo && (
+                          <img src={m.photo} alt="" className="size-[58px] shrink-0 rounded-[9px] object-cover" />
+                        )}
+                        <div className="min-w-0 flex-1">
+                          <p className="text-[14.5px] font-semibold leading-snug text-[#14161a]">{m.title}</p>
+                          <p className="text-[12px] tabular-nums text-[#8a8f99]">
+                            {m.year} · {m.feeling} {m.type}
+                          </p>
+                          {m.story && (
+                            <p className="mt-1 line-clamp-2 text-[12.5px] leading-snug text-[#5c6069]">{m.story}</p>
+                          )}
+                        </div>
+                      </button>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-        )}
+            ))
+          )}
+        </div>
       </div>
       <HomeIndicator />
     </PhoneShell>

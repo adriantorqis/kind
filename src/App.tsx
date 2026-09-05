@@ -16,6 +16,10 @@ import AddCamera from "./pages/connectivity/AddCamera";
 import AiSummary from "./pages/AiSummary";
 import MemoryBook from "./pages/memory/MemoryBook";
 import AddMemory from "./pages/memory/AddMemory";
+import MemoryDetail from "./pages/memory/MemoryDetail";
+import StoryMode from "./pages/memory/StoryMode";
+import PersonDetail from "./pages/memory/PersonDetail";
+import PersonForm from "./pages/memory/PersonForm";
 import MomentsHub from "./pages/moments/MomentsHub";
 import MemoryGame from "./pages/moments/MemoryGame";
 import SensoryPlayer from "./pages/moments/SensoryPlayer";
@@ -56,7 +60,13 @@ export default function App() {
             <Route path="/moments/sensory" element={<SensoryPlayer />} />
             <Route path="/moments/log" element={<MoodLog />} />
             <Route path="/memory-book" element={<MemoryBook />} />
+            <Route path="/memory-book/story" element={<StoryMode />} />
             <Route path="/memory-book/new" element={<AddMemory />} />
+            <Route path="/memory-book/people/new" element={<PersonForm />} />
+            <Route path="/memory-book/people/:id" element={<PersonDetail />} />
+            <Route path="/memory-book/people/:id/edit" element={<PersonForm />} />
+            <Route path="/memory-book/:id" element={<MemoryDetail />} />
+            <Route path="/memory-book/:id/edit" element={<AddMemory />} />
 
             {/* I — Informed Caregiving */}
             <Route path="/learn" element={<LearnHub />} />

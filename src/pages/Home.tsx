@@ -170,7 +170,10 @@ export default function Home() {
             <h2 className="px-6 pb-2 text-[11px] font-semibold uppercase tracking-[0.09em] text-[#8a8f99]">
               A moment to share
             </h2>
-            <button onClick={() => navigate("/memory-book")} className="block w-full text-left">
+            <button
+              onClick={() => navigate(`/memory-book/${moment.id}`)}
+              className="block w-full text-left"
+            >
               <div className="relative h-[168px] w-full overflow-hidden">
                 {moment.photo && <img src={moment.photo} alt="" className="size-full object-cover" />}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
@@ -189,10 +192,10 @@ export default function Home() {
                 </p>
                 <p className="mt-1.5 text-[15px] italic leading-snug text-[#2b2f36]">"{moment.prompt}"</p>
                 <button
-                  onClick={() => navigate("/moments")}
+                  onClick={() => navigate(`/memory-book/story?start=${moment.id}`)}
                   className="-ml-1 mt-1.5 flex min-h-11 items-center gap-1.5 px-1 text-[13px] font-semibold text-[#1d4ed8]"
                 >
-                  Start a session
+                  Read this one together
                   <ChevronRight size={14} />
                 </button>
               </div>
