@@ -102,8 +102,10 @@ export type Symptom =
 
 export type Article = {
   id: string;
+  kind: "article" | "video";
   title: string;
   summary: string;
+  actionSteps: string[];
   body: string[];
   stages: DementiaStage[];
   symptoms: Symptom[];
@@ -191,6 +193,8 @@ type Store = {
 
   // Informed Caregiving
   articles: Article[];
+  completedLearnIds: string[];
+  toggleLearnDone: (id: string) => void;
 
   // Network
   family: FamilyMember[];
@@ -325,8 +329,14 @@ const seedMemories: Memory[] = [
 const seedArticles: Article[] = [
   {
     id: "art-early-signs",
+    kind: "article",
     title: "Normal Aging or Early Dementia? What to Watch For",
     summary: "Occasional forgetfulness is normal. Here's the difference between typical aging and signs worth discussing with a doctor.",
+    actionSteps: [
+      "Watch for repeated questions or missed bills",
+      "Note when a familiar route feels confusing",
+      "Write examples down before they fade",
+    ],
     body: [
       "Everyone misplaces their keys sometimes. The difference between normal aging and possible early dementia is less about a single forgotten word, and more about a pattern: does the same kind of forgetting keep happening, and is it starting to affect daily life?",
       "Watch for: forgetting recently learned information and asking the same question repeatedly; trouble following a familiar recipe or paying bills they've always managed; getting lost on a route they've driven for years; withdrawing from hobbies or social activities without a clear reason.",
@@ -339,8 +349,14 @@ const seedArticles: Article[] = [
   },
   {
     id: "art-diagnosis-conversation",
+    kind: "article",
     title: "Bringing It Up With a Doctor, Without the Dread",
     summary: "A short script for the first conversation, so you're not starting from a blank page in the waiting room.",
+    actionSteps: [
+      "List 2-3 recent examples with dates",
+      "Note mood changes and current medications",
+      "Ask directly: could this be early dementia?",
+    ],
     body: [
       "Most families rehearse this conversation in their head for weeks and then run out of time in a 12-minute appointment. Bring a written list instead of relying on memory in the moment.",
       "Include: 2-3 specific recent examples (what happened, when), any changes in mood or personality, whether a family member has a history of dementia, and current medications.",
@@ -353,8 +369,14 @@ const seedArticles: Article[] = [
   },
   {
     id: "art-sundowning",
+    kind: "article",
     title: "Sundowning: Why Evenings Are Harder",
     summary: "Late-afternoon confusion and agitation are common and predictable — here's how to soften them.",
+    actionSteps: [
+      "Turn on lights before dusk falls",
+      "Keep late afternoons calm, skip errands",
+      "Cut caffeine after noon",
+    ],
     body: [
       "Sundowning is a real, well-documented pattern: increased confusion, restlessness, or agitation in the late afternoon and evening. It isn't something you're causing, and it isn't a sign the condition has suddenly worsened.",
       "What tends to help: keeping the home well-lit before dusk actually falls, so the transition to darkness is gradual; a calm, low-stimulation routine in the late afternoon rather than errands or visitors; limiting caffeine after noon; a consistent bedtime routine.",
@@ -367,8 +389,14 @@ const seedArticles: Article[] = [
   },
   {
     id: "art-wandering",
+    kind: "article",
     title: "Wandering: Reducing Risk Without Locking the Door",
     summary: "Practical, non-restrictive ways to keep someone safe when they feel the urge to walk.",
+    actionSteps: [
+      "Take a supervised walk at the same time daily",
+      "Add a door chime or sensor",
+      "Put ID inside their clothing",
+    ],
     body: [
       "The urge to walk often has a reason behind it, even if it isn't expressed clearly — boredom, searching for something familiar, or simply restlessness. Before restricting movement, try addressing the underlying need: a supervised walk at the same time each day can reduce the urge to leave unexpectedly.",
       "Practical safeguards: a door chime or sensor so you know when a door opens; ID inside clothing or a bracelet with a contact number; letting a couple of neighbors know, so an extra set of eyes exists outside the home too.",
@@ -381,8 +409,14 @@ const seedArticles: Article[] = [
   },
   {
     id: "art-communication",
+    kind: "article",
     title: "When Words Get Harder to Find",
     summary: "How to keep a conversation going when the right word won't come.",
+    actionSteps: [
+      "Ask one simple question at a time",
+      "Offer two choices instead of open-ended ones",
+      "Pause longer before repeating yourself",
+    ],
     body: [
       "As dementia progresses, finding words becomes harder before understanding does. Resist the instinct to finish sentences for them or to correct small factual errors in a story — the emotional content is usually more important than the factual accuracy.",
       "Try short, simple sentences and one question at a time. \"Would you like tea or juice?\" works better than an open-ended \"What do you want to drink?\" Give extra time before repeating or rephrasing a question — a long pause is often just processing time, not confusion.",
@@ -395,8 +429,14 @@ const seedArticles: Article[] = [
   },
   {
     id: "art-agitation",
+    kind: "article",
     title: "Responding to Agitation Without Escalating It",
     summary: "What's usually behind sudden distress, and how to de-escalate in the moment.",
+    actionSteps: [
+      "Check for pain, hunger, or overstimulation first",
+      "Lower your voice, don't argue about facts",
+      "Say \"you're safe, I'm here\"",
+    ],
     body: [
       "Agitation is almost always communication about an unmet need — pain, hunger, needing the bathroom, overstimulation, or fear from not recognizing the surroundings. Ruling out a physical cause first is worth the two minutes it takes.",
       "In the moment: lower your voice rather than raising it, remove or reduce nearby noise, and avoid arguing about what's real. \"You're safe, I'm right here\" tends to land better than correcting a misperception.",
@@ -409,8 +449,14 @@ const seedArticles: Article[] = [
   },
   {
     id: "art-daily-routine-early",
+    kind: "article",
     title: "Building a Routine That Still Fits Their Independence",
     summary: "For early-stage care: structure that supports without taking over.",
+    actionSteps: [
+      "Post a visible daily schedule",
+      "Label drawers for keys and glasses",
+      "Use a day-by-day medication organizer",
+    ],
     body: [
       "In the early stage, the goal isn't to manage every task — it's to quietly reduce the cognitive load of daily decisions while preserving as much independence as possible. A visible daily schedule on the fridge or a whiteboard reduces the number of \"what happens next\" questions.",
       "Simplify without infantilizing: labeled drawers, a designated spot for keys and glasses, medication organizers by day and time. Small environmental changes prevent a disproportionate number of frustrating moments.",
@@ -423,8 +469,14 @@ const seedArticles: Article[] = [
   },
   {
     id: "art-daily-care-late",
+    kind: "article",
     title: "Late-Stage Daily Care: Comfort Over Correction",
     summary: "What matters most when independence has largely given way to full support.",
+    actionSteps: [
+      "Keep the same caregiver and order daily",
+      "Slow down during personal care",
+      "Ask for a few hours of respite weekly",
+    ],
     body: [
       "In the late stage, the priorities shift from cognitive support to physical comfort, dignity, and connection. Recognition may fade, but the capacity to feel calm, safe, or distressed generally remains — this is why sensory content (familiar music, a gentle voice, touch) still matters even when conversation doesn't work anymore.",
       "Keep routines simple and predictable: same caregivers where possible, same order of activities, unhurried pacing during personal care. Rushing tends to produce more resistance, not less.",
@@ -437,8 +489,14 @@ const seedArticles: Article[] = [
   },
   {
     id: "art-sleep",
+    kind: "article",
     title: "Sleep Disturbance: Untangling Night and Day",
     summary: "Why the day/night cycle unravels, and small changes that help reset it.",
+    actionSteps: [
+      "Get 20 minutes of morning sunlight",
+      "Cap naps to early afternoon",
+      "Keep a consistent wake time",
+    ],
     body: [
       "Dementia can disrupt the brain's internal clock, leading to daytime napping and nighttime wakefulness. This is exhausting for caregivers, and it's rarely fixed by one change alone.",
       "Morning sunlight exposure (even 20 minutes) helps reset circadian rhythm more reliably than most sleep aids. Limit naps to a short window in early afternoon, keep the evening low-stimulation, and keep a consistent wake time even after a rough night.",
@@ -451,8 +509,14 @@ const seedArticles: Article[] = [
   },
   {
     id: "art-repetition",
+    kind: "article",
     title: "The Same Question, Fifteen Times: Why, and How to Respond",
     summary: "Repetition is one of the most common and most draining symptoms — here's what's actually happening.",
+    actionSteps: [
+      "Answer patiently, every single time",
+      "Post the answer near the door",
+      "Remind yourself: it's a symptom, not a choice",
+    ],
     body: [
       "Repeated questions usually aren't about the answer — they're often about an underlying feeling of uncertainty that the answer doesn't resolve, because the answer itself isn't retained. Answering with visible patience, every time, is genuinely the most effective response, even though it's the hardest to sustain.",
       "A written answer nearby (a note by the door: \"We're going to the doctor at 2pm\") can sometimes reduce the need to ask, since it offers reassurance on demand without requiring you.",
@@ -465,8 +529,14 @@ const seedArticles: Article[] = [
   },
   {
     id: "art-appetite",
+    kind: "article",
     title: "When Eating Habits Change",
     summary: "Appetite and taste changes are common — practical adjustments that help.",
+    actionSteps: [
+      "Serve smaller meals, more often",
+      "Offer finger foods over utensils",
+      "Eat together instead of just serving",
+    ],
     body: [
       "Dementia can affect appetite, taste perception, and even the physical coordination needed to eat. Weight loss is common and worth monitoring, not ignoring as a minor issue.",
       "Try smaller, more frequent meals instead of three large ones; finger foods reduce the coordination demands of utensils; strong flavors (a little more herbs or citrus) can help when taste perception dulls; eating together, rather than serving and leaving, often increases how much gets eaten.",
@@ -476,6 +546,82 @@ const seedArticles: Article[] = [
     symptoms: ["Appetite Changes"],
     readMins: 2,
     tag: "Daily Care",
+  },
+  {
+    id: "vid-calm-voice",
+    kind: "video",
+    title: "A 2-Minute Calm-Down Technique for Sudden Agitation",
+    summary: "Watch a caregiver de-escalate a distressed moment in real time — voice, pacing, and what to say.",
+    actionSteps: [
+      "Lower your voice and slow down",
+      "Name what you see: \"You seem upset\"",
+      "Offer reassurance, then wait quietly",
+    ],
+    body: [
+      "This short demo follows a caregiver responding to sudden distress: dropping her volume, softening her posture, and giving space instead of pressing for an explanation.",
+      "Notice the pacing — several seconds of silence after each reassurance, rather than filling the gap with more words.",
+    ],
+    stages: ["Middle Stage", "Late Stage"],
+    symptoms: ["Agitation"],
+    readMins: 2,
+    tag: "Behavior",
+  },
+  {
+    id: "vid-sundowning-routine",
+    kind: "video",
+    title: "An Evening Wind-Down Routine, Start to Finish",
+    summary: "A real caregiver walks through the hour before dusk that keeps evenings calmer.",
+    actionSteps: [
+      "Dim harsh lights, add warm lighting",
+      "Play familiar, quiet music",
+      "Skip new activities after 4pm",
+    ],
+    body: [
+      "Filmed in a real home, this walkthrough shows the lighting changes, music choice, and quiet activities used in the hour before sundowning symptoms typically start.",
+      "The routine is repeated nightly — consistency, not any single trick, is what makes it work over time.",
+    ],
+    stages: ["Middle Stage", "Late Stage"],
+    symptoms: ["Sundowning"],
+    readMins: 3,
+    tag: "Behavior",
+  },
+  {
+    id: "vid-communication-demo",
+    kind: "video",
+    title: "A Real Conversation When Words Don't Come Easily",
+    summary: "See the question style and pacing that keeps a conversation going.",
+    actionSteps: [
+      "Ask yes/no or either/or questions",
+      "Wait 10 extra seconds before repeating",
+      "Match their tone, not their words",
+    ],
+    body: [
+      "This unscripted exchange shows how short, closed questions and unhurried pauses keep a conversation moving even when word-finding is difficult.",
+      "Pay attention to what the caregiver doesn't do: no finishing sentences, no correcting small factual slips.",
+    ],
+    stages: ["Middle Stage", "Late Stage"],
+    symptoms: ["Communication Difficulty"],
+    readMins: 4,
+    tag: "Communication",
+  },
+  {
+    id: "vid-safe-walk",
+    kind: "video",
+    title: "Setting Up a Safe Wandering Routine at Home",
+    summary: "A walkthrough of the three changes that make the biggest difference.",
+    actionSteps: [
+      "Walk the same loop, same time daily",
+      "Install a door chime today",
+      "Sew ID info into a jacket pocket",
+    ],
+    body: [
+      "This video demonstrates a supervised walking route, a $12 door chime install, and a simple ID label sewn into a jacket lining — all shown in under four minutes.",
+      "None of these require special equipment or a big renovation, just a short one-time setup.",
+    ],
+    stages: ["Middle Stage", "Late Stage"],
+    symptoms: ["Wandering"],
+    readMins: 3,
+    tag: "Safety",
   },
 ];
 
@@ -533,6 +679,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [family, setFamily] = useState<FamilyMember[]>(() => load("kin.family", seedFamily));
   const [symptomLogs, setSymptomLogs] = useState<SymptomLog[]>(() => load("kin.symptomLogs", [] as SymptomLog[]));
   const [consultations, setConsultations] = useState<Consultation[]>(() => load("kin.consultations", [] as Consultation[]));
+  const [completedLearnIds, setCompletedLearnIds] = useState<string[]>(() => load("kin.completedLearnIds", [] as string[]));
 
   useEffect(() => localStorage.setItem("kin.recipients", JSON.stringify(recipients)), [recipients]);
   useEffect(
@@ -547,6 +694,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => localStorage.setItem("kin.family", JSON.stringify(family)), [family]);
   useEffect(() => localStorage.setItem("kin.symptomLogs", JSON.stringify(symptomLogs)), [symptomLogs]);
   useEffect(() => localStorage.setItem("kin.consultations", JSON.stringify(consultations)), [consultations]);
+  useEffect(() => localStorage.setItem("kin.completedLearnIds", JSON.stringify(completedLearnIds)), [completedLearnIds]);
 
   const value = useMemo<Store>(
     () => {
@@ -658,6 +806,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         recommendedMoment,
 
         articles: seedArticles,
+        completedLearnIds,
+        toggleLearnDone: (id) =>
+          setCompletedLearnIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id])),
 
         family,
         addFamilyMember: (m) => setFamily((prev) => [...prev, { ...m, id: crypto.randomUUID() }]),
@@ -688,7 +839,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         },
       };
     },
-    [recipients, selectedRecipientId, activity, memories, people, cameras, engagementLog, family, symptomLogs, consultations],
+    [recipients, selectedRecipientId, activity, memories, people, cameras, engagementLog, family, symptomLogs, consultations, completedLearnIds],
   );
 
   return <StoreCtx.Provider value={value}>{children}</StoreCtx.Provider>;
