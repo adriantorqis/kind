@@ -20,6 +20,7 @@ import MemoryDetail from "./pages/memory/MemoryDetail";
 import StoryMode from "./pages/memory/StoryMode";
 import PersonDetail from "./pages/memory/PersonDetail";
 import PersonForm from "./pages/memory/PersonForm";
+import PersonAges from "./pages/memory/PersonAges";
 import MomentsHub from "./pages/moments/MomentsHub";
 import MemoryGame from "./pages/moments/MemoryGame";
 import SensoryPlayer from "./pages/moments/SensoryPlayer";
@@ -65,6 +66,7 @@ export default function App() {
             <Route path="/memory-book/people/new" element={<PersonForm />} />
             <Route path="/memory-book/people/:id" element={<PersonDetail />} />
             <Route path="/memory-book/people/:id/edit" element={<PersonForm />} />
+            <Route path="/memory-book/people/:id/ages" element={<PersonAges />} />
             <Route path="/memory-book/:id" element={<MemoryDetail />} />
             <Route path="/memory-book/:id/edit" element={<AddMemory />} />
 

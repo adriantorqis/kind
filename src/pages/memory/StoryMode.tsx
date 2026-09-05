@@ -82,7 +82,10 @@ export default function StoryMode() {
             >
               <RotateCcw size={16} /> Read it again
             </button>
-            <button onClick={() => navigate("/memory-book")} className="py-2 text-[14px] text-[#8a8f99]">
+            <button
+              onClick={() => navigate("/memory-book")}
+              className="flex min-h-11 items-center justify-center text-[14px] text-[#8a8f99]"
+            >
               Close the book
             </button>
           </div>

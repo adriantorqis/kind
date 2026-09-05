@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { BookOpen, Pencil, Users } from "lucide-react";
+import { BookOpen, Clock, Pencil, Users } from "lucide-react";
 import { PhoneShell, HomeIndicator } from "../../components/PhoneShell";
 import { ScreenHeader } from "../../components/ScreenHeader";
 import { PhotoBoxRow } from "../../components/PhotoBox";
@@ -45,10 +45,22 @@ export default function PersonDetail() {
       />
       <div className="flex flex-1 flex-col overflow-y-auto no-scrollbar px-5">
         <div className="flex items-center gap-4 px-1 pb-4">
-          {person.photo ? (
-            <img src={person.photo} alt="" className="size-[64px] rounded-full object-cover shadow-[0_3px_10px_rgba(60,45,25,0.25)]" />
+          {(person.photos?.length ?? 0) > 0 ? (
+            <button
+              onClick={() => navigate(`/memory-book/people/${person.id}/ages`)}
+              aria-label={`See ${person.name} through the years`}
+              className="shrink-0 active:opacity-80"
+            >
+              <img
+                src={person.photo}
+                alt=""
+                className="size-[64px] rounded-full object-cover shadow-[0_3px_10px_rgba(60,45,25,0.25)]"
+              />
+            </button>
+          ) : person.photo ? (
+            <img src={person.photo} alt="" className="size-[64px] shrink-0 rounded-full object-cover shadow-[0_3px_10px_rgba(60,45,25,0.25)]" />
           ) : (
-            <span className="flex size-[64px] items-center justify-center rounded-full bg-white text-[24px] font-semibold text-[#8a7452] shadow-[0_3px_10px_rgba(60,45,25,0.18)]">
+            <span className="flex size-[64px] shrink-0 items-center justify-center rounded-full bg-white text-[24px] font-semibold text-[#8a7452] shadow-[0_3px_10px_rgba(60,45,25,0.18)]">
               {person.name[0]}
             </span>
           )}
@@ -65,6 +77,17 @@ export default function PersonDetail() {
           </div>
         </div>
 
+        <div className="mb-2 flex items-center justify-between px-1">
+          <p className="text-[13px] font-semibold text-[#4a3c2a]">Their photo box</p>
+          {(person.photos?.length ?? 0) > 1 && (
+            <button
+              onClick={() => navigate(`/memory-book/people/${person.id}/ages`)}
+              className="-mr-1 flex min-h-11 items-center gap-1 px-1 text-[12.5px] font-semibold text-[#1d4ed8]"
+            >
+              <Clock size={13} /> See through the years
+            </button>
+          )}
+        </div>
         <PhotoBoxRow
           photos={person.photos ?? []}
           coverSrc={person.photo}

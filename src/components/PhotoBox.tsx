@@ -4,7 +4,7 @@ import { Camera, Check, ChevronLeft, Star, Trash2, X } from "lucide-react";
 export type BoxPhoto = { id: string; year: number; photo: string };
 
 // Deterministic little tilts so the stack looks dropped-in-a-box, not designed.
-const TILTS = [-6, 5, -4, 6, -3, 4, -5, 3];
+export const TILTS = [-6, 5, -4, 6, -3, 4, -5, 3];
 
 function Polaroid({
   photo,
